@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>oop &mdash; School Managament 00.00.01 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=d7bb8d4d"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            School Managament
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">oop</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">School Managament</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">oop</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for oop</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">tkinter</span> <span class="k">as</span> <span class="nn">tk</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">messagebox</span>
+
+
+
+<span class="c1">#PART 4 </span>
+
+<span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+
+<div class="viewcode-block" id="SchoolDatabase">
+<a class="viewcode-back" href="../oop.html#oop.SchoolDatabase">[docs]</a>
+<span class="k">class</span> <span class="nc">SchoolDatabase</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_name</span><span class="o">=</span><span class="s2">&quot;school.db&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_tables</span><span class="p">()</span>
+
+<div class="viewcode-block" id="SchoolDatabase.create_tables">
+<a class="viewcode-back" href="../oop.html#oop.SchoolDatabase.create_tables">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_tables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">        CREATE TABLE IF NOT EXISTS students (</span>
+<span class="s1">            student_id TEXT PRIMARY KEY,</span>
+<span class="s1">            name TEXT NOT NULL,</span>
+<span class="s1">            age INTEGER NOT NULL,</span>
+<span class="s1">            email TEXT NOT NULL</span>
+<span class="s1">        )</span>
+<span class="s1">        &#39;&#39;&#39;</span><span class="p">)</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">        CREATE TABLE IF NOT EXISTS instructors (</span>
+<span class="s1">            instructor_id TEXT PRIMARY KEY,</span>
+<span class="s1">            name TEXT NOT NULL,</span>
+<span class="s1">            age INTEGER NOT NULL,</span>
+<span class="s1">            email TEXT NOT NULL</span>
+<span class="s1">        )</span>
+<span class="s1">        &#39;&#39;&#39;</span><span class="p">)</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">        CREATE TABLE IF NOT EXISTS courses (</span>
+<span class="s1">            course_id TEXT PRIMARY KEY,</span>
+<span class="s1">            name TEXT NOT NULL,</span>
+<span class="s1">            instructor_id TEXT,</span>
+<span class="s1">            FOREIGN KEY (instructor_id) REFERENCES instructors (instructor_id)</span>
+<span class="s1">        )</span>
+<span class="s1">        &#39;&#39;&#39;</span><span class="p">)</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">        CREATE TABLE IF NOT EXISTS registrations (</span>
+<span class="s1">            student_id TEXT NOT NULL,</span>
+<span class="s1">            course_id TEXT NOT NULL,</span>
+<span class="s1">            FOREIGN KEY (student_id) REFERENCES students (student_id),</span>
+<span class="s1">            FOREIGN KEY (course_id) REFERENCES courses (course_id),</span>
+<span class="s1">            PRIMARY KEY (student_id, course_id)</span>
+<span class="s1">        )</span>
+<span class="s1">        &#39;&#39;&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SchoolDatabase.close">
+<a class="viewcode-back" href="../oop.html#oop.SchoolDatabase.close">[docs]</a>
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SchoolDatabase.create_record">
+<a class="viewcode-back" href="../oop.html#oop.SchoolDatabase.create_record">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_record</span><span class="p">(</span><span class="n">db_file</span><span class="p">,</span> <span class="n">table_name</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+    
+        <span class="k">try</span><span class="p">:</span>
+            
+            <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db_file</span><span class="p">)</span>
+            <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+            
+            <span class="n">placeholders</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;?&#39;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+            <span class="n">sql</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;INSERT INTO </span><span class="si">{</span><span class="n">table_name</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2">) VALUES (</span><span class="si">{</span><span class="n">placeholders</span><span class="si">}</span><span class="s2">)&quot;</span>
+            
+            <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+            
+            <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+            
+            <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Record inserted successfully.&quot;</span><span class="p">)</span>
+        
+        <span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An error occurred: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolDatabase.read_records">
+<a class="viewcode-back" href="../oop.html#oop.SchoolDatabase.read_records">[docs]</a>
+    <span class="k">def</span> <span class="nf">read_records</span><span class="p">(</span><span class="n">db_file</span><span class="p">,</span> <span class="n">table_name</span><span class="p">):</span>
+   
+        <span class="k">try</span><span class="p">:</span>
+           
+            <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db_file</span><span class="p">)</span>
+            <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+            <span class="n">sql</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;SELECT * FROM </span><span class="si">{</span><span class="n">table_name</span><span class="si">}</span><span class="s2">&quot;</span>
+            
+            <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+            
+            <span class="n">rows</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+            
+            <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            
+        
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">table_name</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    
+        <span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An error occurred: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[]</span></div>
+
+
+
+<div class="viewcode-block" id="SchoolDatabase.update_record">
+<a class="viewcode-back" href="../oop.html#oop.SchoolDatabase.update_record">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_record</span><span class="p">(</span><span class="n">db_file</span><span class="p">,</span> <span class="n">table_name</span><span class="p">,</span> <span class="n">update_values</span><span class="p">,</span> <span class="n">condition</span><span class="p">):</span>
+       
+        <span class="k">try</span><span class="p">:</span>
+
+            <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db_file</span><span class="p">)</span>
+            <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+            
+            <span class="n">set_clause</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2"> = ?&quot;</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">update_values</span><span class="o">.</span><span class="n">keys</span><span class="p">()])</span>
+            <span class="n">sql</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;UPDATE </span><span class="si">{</span><span class="n">table_name</span><span class="si">}</span><span class="s2"> SET </span><span class="si">{</span><span class="n">set_clause</span><span class="si">}</span><span class="s2"> WHERE </span><span class="si">{</span><span class="n">condition</span><span class="si">}</span><span class="s2">&quot;</span>
+
+            <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">update_values</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+            
+            <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+            
+            <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Record updated successfully.&quot;</span><span class="p">)</span>
+        
+        <span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An error occurred: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="SchoolDatabase.delete_record">
+<a class="viewcode-back" href="../oop.html#oop.SchoolDatabase.delete_record">[docs]</a>
+    <span class="k">def</span> <span class="nf">delete_record</span><span class="p">(</span><span class="n">db_file</span><span class="p">,</span> <span class="n">table_name</span><span class="p">,</span> <span class="n">condition</span><span class="p">):</span>
+      
+        <span class="k">try</span><span class="p">:</span>
+         
+            <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db_file</span><span class="p">)</span>
+            <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        
+            <span class="n">sql</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;DELETE FROM </span><span class="si">{</span><span class="n">table_name</span><span class="si">}</span><span class="s2"> WHERE </span><span class="si">{</span><span class="n">condition</span><span class="si">}</span><span class="s2">&quot;</span>
+            
+            <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+            
+            <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+            
+            <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Record deleted successfully.&quot;</span><span class="p">)</span>
+        
+        <span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An error occurred: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+   
+<div class="viewcode-block" id="SchoolDatabase.backup_database">
+<a class="viewcode-back" href="../oop.html#oop.SchoolDatabase.backup_database">[docs]</a>
+    <span class="k">def</span> <span class="nf">backup_database</span><span class="p">(</span><span class="n">db_file</span><span class="p">,</span> <span class="n">backup_file</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">db_file</span><span class="p">,</span> <span class="n">backup_file</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Backup successful: </span><span class="si">{</span><span class="n">backup_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">IOError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An error occurred while backing up the database: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+
+
+
+
+<span class="c1">#PART 1 </span>
+
+
+<div class="viewcode-block" id="validate_email">
+<a class="viewcode-back" href="../oop.html#oop.validate_email">[docs]</a>
+<span class="k">def</span> <span class="nf">validate_email</span><span class="p">(</span><span class="n">email</span><span class="p">):</span>
+    <span class="n">email_regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$&#39;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">email_regex</span><span class="p">,</span> <span class="n">email</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Please enter a valid email address: </span><span class="si">{</span><span class="n">email</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="validate_non_empty_string">
+<a class="viewcode-back" href="../oop.html#oop.validate_non_empty_string">[docs]</a>
+<span class="k">def</span> <span class="nf">validate_non_empty_string</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">field_name</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">value</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">field_name</span><span class="si">}</span><span class="s2"> is mandatory.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="validate_age">
+<a class="viewcode-back" href="../oop.html#oop.validate_age">[docs]</a>
+<span class="k">def</span> <span class="nf">validate_age</span><span class="p">(</span><span class="n">age</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="n">age</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Age cannot be negative.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Person">
+<a class="viewcode-back" href="../oop.html#oop.Person">[docs]</a>
+<span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">age</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">validate_non_empty_string</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;Name&quot;</span><span class="p">)</span>
+        <span class="n">validate_age</span><span class="p">(</span><span class="n">age</span><span class="p">)</span>
+        <span class="n">validate_email</span><span class="p">(</span><span class="n">email</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_email</span> <span class="o">=</span> <span class="n">email</span>
+
+<div class="viewcode-block" id="Person.introduce">
+<a class="viewcode-back" href="../oop.html#oop.Person.introduce">[docs]</a>
+    <span class="k">def</span> <span class="nf">introduce</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hi, my name is </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> and I&#39;m </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">age</span><span class="si">}</span><span class="s2"> years old.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Person.to_dict">
+<a class="viewcode-back" href="../oop.html#oop.Person.to_dict">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">age</span><span class="p">,</span>
+            <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_email</span>
+        <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="Person.save">
+<a class="viewcode-back" href="../oop.html#oop.Person.save">[docs]</a>
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(),</span> <span class="n">f</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Person.load">
+<a class="viewcode-back" href="../oop.html#oop.Person.load">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">])</span></div>
+</div>
+
+
+<div class="viewcode-block" id="Student">
+<a class="viewcode-back" href="../oop.html#oop.Student">[docs]</a>
+<span class="k">class</span> <span class="nc">Student</span><span class="p">(</span><span class="n">Person</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">age</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">student_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">email</span><span class="p">)</span>
+        <span class="n">validate_non_empty_string</span><span class="p">(</span><span class="n">student_id</span><span class="p">,</span> <span class="s2">&quot;Student ID&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_id</span> <span class="o">=</span> <span class="n">student_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registered_courses</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="Student.register_course">
+<a class="viewcode-back" href="../oop.html#oop.Student.register_course">[docs]</a>
+    <span class="k">def</span> <span class="nf">register_course</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">course</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">course</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">registered_courses</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">registered_courses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">course</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>  
+            <span class="n">course</span><span class="o">.</span><span class="n">enrolled_students</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">student_id</span><span class="p">)</span>
+            <span class="n">course</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;course_data.json&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;student_data.json&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> has registered for </span><span class="si">{</span><span class="n">course</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> is already registered for </span><span class="si">{</span><span class="n">course</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Student.to_dict">
+<a class="viewcode-back" href="../oop.html#oop.Student.to_dict">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">age</span><span class="p">,</span>
+            <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_email</span><span class="p">,</span>
+            <span class="s2">&quot;student_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">student_id</span><span class="p">,</span>
+            <span class="s2">&quot;registered_courses&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">course</span> <span class="k">for</span> <span class="n">course</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">registered_courses</span><span class="p">]</span>
+        <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="Student.load">
+<a class="viewcode-back" href="../oop.html#oop.Student.load">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span><span class="nb">id</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">students</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Student</span><span class="p">(</span><span class="n">students</span><span class="p">[</span><span class="nb">id</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">students</span><span class="p">[</span><span class="nb">id</span><span class="p">][</span><span class="s1">&#39;age&#39;</span><span class="p">],</span> <span class="n">students</span><span class="p">[</span><span class="nb">id</span><span class="p">][</span><span class="s1">&#39;email&#39;</span><span class="p">],</span> <span class="nb">id</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="Student.save">
+<a class="viewcode-back" href="../oop.html#oop.Student.save">[docs]</a>
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+
+            <span class="n">file_content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">file_content</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>  
+                <span class="n">students</span><span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">file_content</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">students</span> <span class="o">=</span> <span class="p">{}</span>  
+
+        <span class="n">students</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">student_id</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">students</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Student.load_all">
+<a class="viewcode-back" href="../oop.html#oop.Student.load_all">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load_all</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">students_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">students_data</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[]</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Instructor">
+<a class="viewcode-back" href="../oop.html#oop.Instructor">[docs]</a>
+<span class="k">class</span> <span class="nc">Instructor</span><span class="p">(</span><span class="n">Person</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">age</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">instructor_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">email</span><span class="p">)</span>
+        <span class="n">validate_non_empty_string</span><span class="p">(</span><span class="n">instructor_id</span><span class="p">,</span> <span class="s2">&quot;Instructor ID&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_id</span> <span class="o">=</span> <span class="n">instructor_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assigned_courses</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="Instructor.assign_course">
+<a class="viewcode-back" href="../oop.html#oop.Instructor.assign_course">[docs]</a>
+    <span class="k">def</span> <span class="nf">assign_course</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">course</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">course</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_courses</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assigned_courses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">course</span><span class="p">)</span>
+            <span class="n">course</span><span class="o">.</span><span class="n">instructor</span> <span class="o">=</span> <span class="bp">self</span>
+           
+            <span class="n">course</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;course_data.json&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;instructor_data.json&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Instructor </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> has been assigned to course </span><span class="si">{</span><span class="n">course</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Instructor </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> is already assigned to course </span><span class="si">{</span><span class="n">course</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Instructor.to_dict">
+<a class="viewcode-back" href="../oop.html#oop.Instructor.to_dict">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">age</span><span class="p">,</span>
+            <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_email</span><span class="p">,</span>
+            <span class="s2">&quot;instructor_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructor_id</span><span class="p">,</span>
+            <span class="s2">&quot;assigned_courses&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">course</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">course</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_courses</span><span class="p">]</span>
+        <span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="Instructor.save">
+<a class="viewcode-back" href="../oop.html#oop.Instructor.save">[docs]</a>
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+
+     
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        
+            <span class="n">file_content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">file_content</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>  
+                <span class="n">instructors</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">file_content</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">instructors</span> <span class="o">=</span> <span class="p">{}</span>  
+
+
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">instructors</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Data in file is not a dictionary&quot;</span><span class="p">)</span>
+
+    
+        <span class="n">instructors</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">instructor_id</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">instructors</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Instructor.load_all">
+<a class="viewcode-back" href="../oop.html#oop.Instructor.load_all">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load_all</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">instructors_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">instructors_data</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[]</span></div>
+
+        
+<div class="viewcode-block" id="Instructor.load">
+<a class="viewcode-back" href="../oop.html#oop.Instructor.load">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span><span class="nb">id</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">instructors</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+  
+        <span class="k">return</span> <span class="n">Instructor</span><span class="p">(</span><span class="n">instructors</span><span class="p">[</span><span class="nb">id</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">instructors</span><span class="p">[</span><span class="nb">id</span><span class="p">][</span><span class="s1">&#39;age&#39;</span><span class="p">],</span> <span class="n">instructors</span><span class="p">[</span><span class="nb">id</span><span class="p">][</span><span class="s1">&#39;email&#39;</span><span class="p">],</span> <span class="nb">id</span><span class="p">)</span></div>
+</div>
+
+
+<div class="viewcode-block" id="Course">
+<a class="viewcode-back" href="../oop.html#oop.Course">[docs]</a>
+<span class="k">class</span> <span class="nc">Course</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">instructor</span><span class="p">:</span> <span class="n">Instructor</span><span class="p">):</span>
+        <span class="n">validate_non_empty_string</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="s2">&quot;Course ID&quot;</span><span class="p">)</span>
+        <span class="n">validate_non_empty_string</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;Course Name&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor</span> <span class="o">=</span> <span class="n">instructor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enrolled_students</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="Course.add_student">
+<a class="viewcode-back" href="../oop.html#oop.Course.add_student">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_student</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">student</span><span class="p">:</span> <span class="n">Student</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">student</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">enrolled_students</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">enrolled_students</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">student</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">student</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> has been added to the course: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">student</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> is already enrolled in the course: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Course.to_dict">
+<a class="viewcode-back" href="../oop.html#oop.Course.to_dict">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instructor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+     
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="s2">&quot;instructor&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructor</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(),</span>
+                <span class="s2">&quot;enrolled_students&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">student</span> <span class="k">for</span> <span class="n">student</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">enrolled_students</span><span class="p">]</span>
+            <span class="p">}</span>
+        
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="s2">&quot;instructor&quot;</span><span class="p">:</span><span class="kc">None</span><span class="p">,</span>
+                <span class="s2">&quot;enrolled_students&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">student</span> <span class="k">for</span> <span class="n">student</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">enrolled_students</span><span class="p">]</span>
+            <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="Course.save">
+<a class="viewcode-back" href="../oop.html#oop.Course.save">[docs]</a>
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+
+            <span class="n">file_content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">file_content</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>  
+                <span class="n">courses</span><span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">file_content</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">courses</span> <span class="o">=</span> <span class="p">{}</span>  
+
+        <span class="n">courses</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">courses</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Course.load">
+<a class="viewcode-back" href="../oop.html#oop.Course.load">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span><span class="nb">id</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">courses</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">courses</span><span class="p">[</span><span class="nb">id</span><span class="p">][</span><span class="s1">&#39;instructor&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Course</span><span class="p">(</span><span class="n">courses</span><span class="p">[</span><span class="nb">id</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="n">courses</span><span class="p">[</span><span class="nb">id</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="kc">None</span><span class="p">)</span>
+        
+        <span class="n">instructor</span> <span class="o">=</span><span class="n">Instructor</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;instructor_data.json&#39;</span><span class="p">,</span><span class="n">courses</span><span class="p">[</span><span class="nb">id</span><span class="p">][</span><span class="s1">&#39;instructor&#39;</span><span class="p">][</span><span class="s1">&#39;instructor_id&#39;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">Course</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">courses</span><span class="p">[</span><span class="nb">id</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">instructor</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Course.load_all">
+<a class="viewcode-back" href="../oop.html#oop.Course.load_all">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load_all</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">courses_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+         
+            <span class="k">return</span> <span class="n">courses_data</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[]</span></div>
+</div>
+
+
+
+
+
+<span class="c1">#PART 2</span>
+<span class="c1"># import tkinter as tk</span>
+<span class="c1"># from tkinter import ttk</span>
+<span class="c1"># import json</span>
+
+<span class="c1"># class SchoolManagementSystem:</span>
+<span class="c1">#     def __init__(self, root):</span>
+<span class="c1">#         self.root = root</span>
+<span class="c1">#         self.root.title(&quot;School Management System&quot;)</span>
+<span class="c1">#         self.root.geometry(&quot;800x600&quot;)</span>
+
+<span class="c1">#         self.notebook = ttk.Notebook(self.root)</span>
+<span class="c1">#         self.notebook.pack(expand=True, fill=&quot;both&quot;)</span>
+
+<span class="c1">#         # Initialize data</span>
+<span class="c1">#         self.students = {}</span>
+<span class="c1">#         self.instructors = {}</span>
+<span class="c1">#         self.courses = {}</span>
+
+<span class="c1">#         if os.path.exists(&#39;student_data.json&#39;):</span>
+<span class="c1">#             self.students = Student.load_all(&#39;student_data.json&#39;)</span>
+<span class="c1">#         else:</span>
+<span class="c1">#             json.dump(self.students, open(&#39;student_data.json&#39;, &#39;w&#39;))</span>
+
+<span class="c1">#         if os.path.exists(&#39;instructor_data.json&#39;):</span>
+<span class="c1">#             self.instructors = Instructor.load_all(&#39;instructor_data.json&#39;)</span>
+<span class="c1">#         else:</span>
+<span class="c1">#             json.dump(self.instructors, open(&#39;instructor_data.json&#39;, &#39;w&#39;))</span>
+
+<span class="c1">#         if os.path.exists(&#39;course_data.json&#39;):</span>
+<span class="c1">#             self.courses = Course.load_all(&#39;course_data.json&#39;)</span>
+<span class="c1">#         else:</span>
+<span class="c1">#             json.dump(self.courses, open(&#39;course_data.json&#39;, &#39;w&#39;))</span>
+
+
+<span class="c1">#         self.course_var = tk.StringVar()</span>
+
+<span class="c1">#         self.create_student_tab()</span>
+<span class="c1">#         self.create_instructor_tab()</span>
+<span class="c1">#         self.create_course_tab()</span>
+<span class="c1">#         self.create_display_tab()</span>
+
+
+<span class="c1">#     def create_display_tab(self):</span>
+<span class="c1">#         records_tab = ttk.Frame(self.notebook)</span>
+<span class="c1">#         self.notebook.add(records_tab, text=&quot;Records&quot;)</span>
+
+<span class="c1">#         ttk.Label(records_tab, text=&quot;Search:&quot;).pack(side=tk.LEFT, padx=10, pady=10)</span>
+
+<span class="c1">#         self.search_var = tk.StringVar()</span>
+<span class="c1">#         self.search_entry = tk.Entry(records_tab, textvariable=self.search_var)</span>
+<span class="c1">#         self.search_entry.pack(side=tk.LEFT, padx=10, pady=10)</span>
+
+<span class="c1">#         self.search_button = ttk.Button(records_tab, text=&quot;Search&quot;, command=self.search_records)</span>
+<span class="c1">#         self.search_button.pack(side=tk.LEFT, padx=10, pady=10)</span>
+
+<span class="c1">#         columns = (&quot;ID&quot;, &quot;Name&quot;, &quot;Type&quot;, &quot;Additional Info&quot;)</span>
+<span class="c1">#         self.records_tree = ttk.Treeview(records_tab, columns=columns, show=&quot;headings&quot;)</span>
+        
+<span class="c1">#         self.records_tree.heading(&quot;ID&quot;, text=&quot;ID&quot;)</span>
+<span class="c1">#         self.records_tree.heading(&quot;Name&quot;, text=&quot;Name&quot;)</span>
+<span class="c1">#         self.records_tree.heading(&quot;Type&quot;, text=&quot;Type&quot;)</span>
+<span class="c1">#         self.records_tree.heading(&quot;Additional Info&quot;, text=&quot;Additional Info&quot;)</span>
+
+<span class="c1">#         self.records_tree.column(&quot;ID&quot;, width=100)</span>
+<span class="c1">#         self.records_tree.column(&quot;Name&quot;, width=150)</span>
+<span class="c1">#         self.records_tree.column(&quot;Type&quot;, width=100)</span>
+<span class="c1">#         self.records_tree.column(&quot;Additional Info&quot;, width=200)</span>
+
+<span class="c1">#         self.records_tree.pack(expand=True, fill=&quot;both&quot;)</span>
+<span class="c1">#         self.edit_button = ttk.Button(records_tab, text=&quot;Edit Record&quot;, command=self.edit_record)</span>
+<span class="c1">#         self.edit_button.pack(side=tk.LEFT, padx=10, pady=10)</span>
+
+<span class="c1">#         self.delete_button = ttk.Button(records_tab, text=&quot;Delete Record&quot;, command=self.delete_record)</span>
+<span class="c1">#         self.delete_button.pack(side=tk.LEFT, padx=10, pady=10)</span>
+
+<span class="c1">#         self.load_all_records()</span>
+
+<span class="c1">#     def edit_record(self):</span>
+<span class="c1">#         selected_item = self.records_tree.selection()</span>
+        
+<span class="c1">#         if selected_item:</span>
+<span class="c1">#             item = self.records_tree.item(selected_item)</span>
+<span class="c1">#             record_id = item[&#39;values&#39;][0]</span>
+<span class="c1">#             record_type = item[&#39;values&#39;][2]</span>
+<span class="c1">#             print(f&quot;Record ID: {record_id}, Record Type: {record_type}&quot;)</span>
+
+<span class="c1">#             if record_type == &quot;Student&quot;:</span>
+<span class="c1">#                 student_data = self.students.get(record_id)</span>
+<span class="c1">#                 self.student_id.delete(0, tk.END)</span>
+<span class="c1">#                 self.student_id.insert(0, record_id)</span>
+
+<span class="c1">#                 self.student_name.delete(0, tk.END)</span>
+<span class="c1">#                 self.student_name.insert(0, student_data[&#39;name&#39;])</span>
+
+<span class="c1">#                 self.student_age.delete(0, tk.END)</span>
+<span class="c1">#                 self.student_age.insert(0, student_data[&#39;age&#39;])</span>
+
+<span class="c1">#                 self.student_email.delete(0, tk.END)</span>
+<span class="c1">#                 self.student_email.insert(0, student_data[&#39;email&#39;])</span>
+
+<span class="c1">#             elif record_type == &quot;Instructor&quot;:</span>
+<span class="c1">#                 instructor_data = self.instructors.get(record_id)</span>
+<span class="c1">#                 self.instructor_id.delete(0, tk.END)</span>
+<span class="c1">#                 self.instructor_id.insert(0, record_id)</span>
+
+<span class="c1">#                 self.instructor_name.delete(0, tk.END)</span>
+<span class="c1">#                 self.instructor_name.insert(0, instructor_data[&#39;name&#39;])</span>
+
+<span class="c1">#                 self.instructor_age.delete(0, tk.END)</span>
+<span class="c1">#                 self.instructor_age.insert(0, instructor_data[&#39;age&#39;])</span>
+
+<span class="c1">#                 self.instructor_email.delete(0, tk.END)</span>
+<span class="c1">#                 self.instructor_email.insert(0, instructor_data[&#39;email&#39;])</span>
+
+<span class="c1">#             elif record_type == &quot;Course&quot;:</span>
+<span class="c1">#                 course_data = self.courses.get(record_id)</span>
+<span class="c1">#                 self.course_id.delete(0, tk.END)</span>
+<span class="c1">#                 self.course_id.insert(0, record_id)</span>
+
+<span class="c1">#                 self.course_name.delete(0, tk.END)</span>
+<span class="c1">#                 self.course_name.insert(0, course_data[&#39;name&#39;])</span>
+
+<span class="c1">#                 if course_data[&#39;instructor&#39;]:</span>
+<span class="c1">#                     self.course_instructor_name.delete(0, tk.END)</span>
+<span class="c1">#                     self.course_instructor_name.insert(0, course_data[&#39;instructor&#39;][&#39;instructor_id&#39;])</span>
+
+<span class="c1">#         else:</span>
+<span class="c1">#             print(&quot;No record selected.&quot;)</span>
+
+<span class="c1">#     def delete_record(self):</span>
+<span class="c1">#         selected_item = self.records_tree.selection()</span>
+
+<span class="c1">#         if selected_item:</span>
+<span class="c1">#             item = self.records_tree.item(selected_item)</span>
+<span class="c1">#             record_id = item[&#39;values&#39;][0]</span>
+<span class="c1">#             record_type = item[&#39;values&#39;][2]</span>
+
+<span class="c1">#             if record_type == &quot;Student&quot; and record_id in self.students:</span>
+<span class="c1">#                 del self.students[record_id]</span>
+<span class="c1">#                 json.dump(self.students, open(&#39;student_data.json&#39;, &#39;w&#39;))</span>
+
+<span class="c1">#             elif record_type == &quot;Instructor&quot; and record_id in self.instructors:</span>
+<span class="c1">#                 del self.instructors[record_id]</span>
+<span class="c1">#                 json.dump(self.instructors, open(&#39;instructor_data.json&#39;, &#39;w&#39;))</span>
+
+<span class="c1">#             elif record_type == &quot;Course&quot; and record_id in self.courses:</span>
+<span class="c1">#                 del self.courses[record_id]</span>
+<span class="c1">#                 json.dump(self.courses, open(&#39;course_data.json&#39;, &#39;w&#39;))</span>
+                
+<span class="c1">#             self.load_all_records()</span>
+<span class="c1">#         else:</span>
+<span class="c1">#             print(&quot;No record selected.&quot;)</span>
+
+<span class="c1">#     def search_records(self):</span>
+<span class="c1">#         query = self.search_var.get().lower()</span>
+
+<span class="c1">#         for row in self.records_tree.get_children():</span>
+<span class="c1">#             self.records_tree.delete(row)</span>
+
+<span class="c1">#         for student_id, student_data in self.students.items():</span>
+<span class="c1">#             name = student_data.get(&#39;name&#39;, &#39;&#39;).lower()</span>
+<span class="c1">#             if query in name or query == student_id.lower():</span>
+<span class="c1">#                 age = student_data.get(&#39;age&#39;, &#39;N/A&#39;)</span>
+<span class="c1">#                 email = student_data.get(&#39;email&#39;, &#39;N/A&#39;)</span>
+<span class="c1">#                 self.records_tree.insert(&quot;&quot;, &quot;end&quot;, values=(student_id, name, &quot;Student&quot;, f&quot;Age: {age}, Email: {email}&quot;))</span>
+
+<span class="c1">#         for instructor_id, instructor_data in self.instructors.items():</span>
+<span class="c1">#             name = instructor_data.get(&#39;name&#39;, &#39;&#39;).lower()</span>
+<span class="c1">#             if query in name or query == instructor_id.lower():</span>
+<span class="c1">#                 age = instructor_data.get(&#39;age&#39;, &#39;N/A&#39;)</span>
+<span class="c1">#                 email = instructor_data.get(&#39;email&#39;, &#39;N/A&#39;)</span>
+<span class="c1">#                 self.records_tree.insert(&quot;&quot;, &quot;end&quot;, values=(instructor_id, name, &quot;Instructor&quot;, f&quot;Age: {age}, Email: {email}&quot;))</span>
+
+<span class="c1">#         for course_id, course_data in self.courses.items():</span>
+<span class="c1">#             course_name = course_data.get(&#39;name&#39;, &#39;&#39;).lower()</span>
+<span class="c1">#             if query in course_name or query == course_id.lower():</span>
+<span class="c1">#                 if course_data[&#39;instructor&#39;] is None:</span>
+<span class="c1">#                     self.records_tree.insert(&quot;&quot;, &quot;end&quot;, values=(course_id, course_name, &quot;Course&quot;, &quot;Instructor: N/A&quot;))</span>
+<span class="c1">#                 else:</span>
+<span class="c1">#                     instructor_name = course_data[&#39;instructor&#39;][&#39;name&#39;].lower()</span>
+<span class="c1">#                     self.records_tree.insert(&quot;&quot;, &quot;end&quot;, values=(course_id, course_name, &quot;Course&quot;, f&quot;Instructor: {instructor_name}&quot;))</span>
+
+
+<span class="c1">#     def load_all_records(self):</span>
+
+<span class="c1">#         for row in self.records_tree.get_children():</span>
+<span class="c1">#             self.records_tree.delete(row)</span>
+
+<span class="c1">#         for student_id, student_data in self.students.items():</span>
+<span class="c1">#             name = student_data.get(&#39;name&#39;, &#39;N/A&#39;)</span>
+<span class="c1">#             age = student_data.get(&#39;age&#39;, &#39;N/A&#39;)</span>
+<span class="c1">#             email = student_data.get(&#39;email&#39;, &#39;N/A&#39;)</span>
+<span class="c1">#             self.records_tree.insert(&quot;&quot;, &quot;end&quot;, values=(student_id, name, &quot;Student&quot;, f&quot;Age: {age}, Email: {email}&quot;))</span>
+
+<span class="c1">#         for instructor_id, instructor_data in self.instructors.items():</span>
+<span class="c1">#             name = instructor_data.get(&#39;name&#39;, &#39;N/A&#39;)</span>
+<span class="c1">#             age = instructor_data.get(&#39;age&#39;, &#39;N/A&#39;)</span>
+<span class="c1">#             email = instructor_data.get(&#39;email&#39;, &#39;N/A&#39;)</span>
+<span class="c1">#             self.records_tree.insert(&quot;&quot;, &quot;end&quot;, values=(instructor_id, name, &quot;Instructor&quot;, f&quot;Age: {age}, Email: {email}&quot;))</span>
+
+<span class="c1">#         for course_id, course_data in self.courses.items():</span>
+<span class="c1">#             course_name = course_data.get(&#39;name&#39;, &#39;N/A&#39;)</span>
+<span class="c1">#             if course_data[&#39;instructor&#39;] is None:</span>
+<span class="c1">#                 self.records_tree.insert(&quot;&quot;, &quot;end&quot;, values=(course_id, course_name, &quot;Course&quot;, &quot;Instructor: N/A&quot;))</span>
+<span class="c1">#             else:</span>
+<span class="c1">#                 instructor_id = course_data[&#39;instructor&#39;][&#39;instructor_id&#39;]</span>
+<span class="c1">#                 instructor_name = course_data[&#39;instructor&#39;][&#39;instructor_id&#39;]</span>
+<span class="c1">#             self.records_tree.insert(&quot;&quot;, &quot;end&quot;, values=(course_id, course_name, &quot;Course&quot;, f&quot;Instructor: {instructor_name}&quot;))</span>
+
+<span class="c1">#     def create_student_tab(self):</span>
+<span class="c1">#         student_tab = ttk.Frame(self.notebook)</span>
+<span class="c1">#         self.notebook.add(student_tab, text=&quot;Student&quot;)</span>
+
+<span class="c1">#         ttk.Label(student_tab, text=&quot;Name:&quot;).grid(row=0, column=0, padx=10, pady=5)</span>
+<span class="c1">#         self.student_name = tk.Entry(student_tab)</span>
+<span class="c1">#         self.student_name.grid(row=0, column=1, padx=10, pady=5)</span>
+
+<span class="c1">#         ttk.Label(student_tab, text=&quot;Age:&quot;).grid(row=1, column=0, padx=10, pady=5)</span>
+<span class="c1">#         self.student_age = tk.Entry(student_tab)</span>
+<span class="c1">#         self.student_age.grid(row=1, column=1, padx=10, pady=5)</span>
+
+<span class="c1">#         ttk.Label(student_tab, text=&quot;Email:&quot;).grid(row=2, column=0, padx=10, pady=5)</span>
+<span class="c1">#         self.student_email = tk.Entry(student_tab)</span>
+<span class="c1">#         self.student_email.grid(row=2, column=1, padx=10, pady=5)</span>
+
+<span class="c1">#         ttk.Label(student_tab, text=&quot;Student ID:&quot;).grid(row=3, column=0, padx=10, pady=5)</span>
+<span class="c1">#         self.student_id = tk.Entry(student_tab)</span>
+<span class="c1">#         self.student_id.grid(row=3, column=1, padx=10, pady=5)</span>
+
+<span class="c1">#         ttk.Button(student_tab, text=&quot;Add Student&quot;, command=self.add_student).grid(row=4, columnspan=2, pady=10)</span>
+        
+<span class="c1">#         self.student_course_dropdown = ttk.Combobox(student_tab, textvariable=self.course_var)</span>
+<span class="c1">#         course_names = list(self.courses.keys())</span>
+<span class="c1">#         self.student_course_dropdown[&#39;values&#39;] = course_names</span>
+<span class="c1">#         self.student_course_dropdown.grid(row=5, column=1, padx=10, pady=5)</span>
+        
+<span class="c1">#         ttk.Button(student_tab, text=&quot;Register for Course&quot;, command=self.register_course).grid(row=6, columnspan=2, pady=10)</span>
+
+<span class="c1">#     def create_instructor_tab(self):</span>
+<span class="c1">#         instructor_tab = ttk.Frame(self.notebook)</span>
+<span class="c1">#         self.notebook.add(instructor_tab, text=&quot;Instructor&quot;)</span>
+
+<span class="c1">#         ttk.Label(instructor_tab, text=&quot;Name:&quot;).grid(row=0, column=0, padx=10, pady=5)</span>
+<span class="c1">#         self.instructor_name = tk.Entry(instructor_tab)</span>
+<span class="c1">#         self.instructor_name.grid(row=0, column=1, padx=10, pady=5)</span>
+
+<span class="c1">#         ttk.Label(instructor_tab, text=&quot;Age:&quot;).grid(row=1, column=0, padx=10, pady=5)</span>
+<span class="c1">#         self.instructor_age = tk.Entry(instructor_tab)</span>
+<span class="c1">#         self.instructor_age.grid(row=1, column=1, padx=10, pady=5)</span>
+
+<span class="c1">#         ttk.Label(instructor_tab, text=&quot;Email:&quot;).grid(row=2, column=0, padx=10, pady=5)</span>
+<span class="c1">#         self.instructor_email = tk.Entry(instructor_tab)</span>
+<span class="c1">#         self.instructor_email.grid(row=2, column=1, padx=10, pady=5)</span>
+
+<span class="c1">#         ttk.Label(instructor_tab, text=&quot;Instructor ID:&quot;).grid(row=3, column=0, padx=10, pady=5)</span>
+<span class="c1">#         self.instructor_id = tk.Entry(instructor_tab)</span>
+<span class="c1">#         self.instructor_id.grid(row=3, column=1, padx=10, pady=5)</span>
+
+<span class="c1">#         ttk.Button(instructor_tab, text=&quot;Add Instructor&quot;, command=self.add_instructor).grid(row=4, columnspan=2, pady=10)</span>
+
+<span class="c1">#         self.instructor_course_dropdown = ttk.Combobox(instructor_tab, textvariable=self.course_var)</span>
+<span class="c1">#         empty_instructor_course_ids = [course_id for course_id, course in self.courses.items() if not course.get(&#39;instructor&#39;)]</span>
+<span class="c1">#         self.instructor_course_dropdown[&#39;values&#39;] = empty_instructor_course_ids</span>
+<span class="c1">#         self.instructor_course_dropdown.grid(row=5, column=1, padx=10, pady=5)</span>
+
+<span class="c1">#         ttk.Button(instructor_tab, text=&quot;Assign to Course&quot;, command=self.assign_course).grid(row=6, columnspan=2, pady=10)</span>
+
+<span class="c1">#     def create_course_tab(self):</span>
+<span class="c1">#         course_tab = ttk.Frame(self.notebook)</span>
+<span class="c1">#         self.notebook.add(course_tab, text=&quot;Course&quot;)</span>
+
+<span class="c1">#         ttk.Label(course_tab, text=&quot;Course Name:&quot;).grid(row=0, column=0, padx=10, pady=5)</span>
+<span class="c1">#         self.course_name = tk.Entry(course_tab)</span>
+<span class="c1">#         self.course_name.grid(row=0, column=1, padx=10, pady=5)</span>
+
+<span class="c1">#         ttk.Label(course_tab, text=&quot;Course ID:&quot;).grid(row=1, column=0, padx=10, pady=5)</span>
+<span class="c1">#         self.course_id = tk.Entry(course_tab)</span>
+<span class="c1">#         self.course_id.grid(row=1, column=1, padx=10, pady=5)</span>
+
+<span class="c1">#         ttk.Label(course_tab, text=&quot;Instructor ID:&quot;).grid(row=2, column=0, padx=10, pady=5)</span>
+<span class="c1">#         self.course_instructor_id = tk.Entry(course_tab)</span>
+<span class="c1">#         self.course_instructor_id.grid(row=2, column=1, padx=10, pady=5)</span>
+
+<span class="c1">#         ttk.Button(course_tab, text=&quot;Add Course&quot;, command=self.add_course).grid(row=3, columnspan=2, pady=10)</span>
+
+<span class="c1">#     def add_student(self):</span>
+<span class="c1">#         student = Student(</span>
+<span class="c1">#             self.student_name.get(),</span>
+<span class="c1">#             int(self.student_age.get()),</span>
+<span class="c1">#             self.student_email.get(),</span>
+<span class="c1">#             self.student_id.get()</span>
+<span class="c1">#         )</span>
+<span class="c1">#         self.students[self.student_id.get()] = student.to_dict()</span>
+<span class="c1">#         student.save(&#39;student_data.json&#39;)</span>
+<span class="c1">#         self.students=Student.load_all(&#39;student_data.json&#39;)</span>
+
+<span class="c1">#         columns = [&#39;student_id&#39;, &#39;name&#39;, &#39;age&#39;, &#39;email&#39;]</span>
+<span class="c1">#         values = [student[&#39;student_id&#39;], student[&#39;name&#39;], student[&#39;age&#39;], student[&#39;email&#39;]]</span>
+<span class="c1">#         SchoolDatabase.create_record(&#39;school.db&#39;, &#39;students&#39;, columns, values)</span>
+
+<span class="c1">#         self.load_all_records()</span>
+<span class="c1">#         self.students[self.student_id.get()] = student.to_dict()  </span>
+<span class="c1">#         self.student_name.delete(0, tk.END)</span>
+<span class="c1">#         self.student_age.delete(0, tk.END)</span>
+<span class="c1">#         self.student_email.delete(0, tk.END)</span>
+<span class="c1">#         self.student_id.delete(0, tk.END)</span>
+
+<span class="c1">#     def add_instructor(self):</span>
+<span class="c1">#         instructor = Instructor(</span>
+<span class="c1">#             self.instructor_name.get(),</span>
+<span class="c1">#             int(self.instructor_age.get()),</span>
+<span class="c1">#             self.instructor_email.get(),</span>
+<span class="c1">#             self.instructor_id.get()</span>
+<span class="c1">#         )</span>
+<span class="c1">#         self.instructors[self.instructor_id.get()] = instructor.to_dict()</span>
+<span class="c1">#         instructor.save(&#39;instructor_data.json&#39;)</span>
+<span class="c1">#         self.instructors= Instructor.load_all(&#39;instructor_data.json&#39;)</span>
+
+<span class="c1">#         columns = [&#39;instructor_id&#39;, &#39;name&#39;, &#39;age&#39;, &#39;email&#39;]</span>
+<span class="c1">#         values = [instructor[&#39;instructor_id&#39;], instructor[&#39;name&#39;], instructor[&#39;age&#39;], instructor[&#39;email&#39;]]</span>
+<span class="c1">#         SchoolDatabase.create_record(&#39;school.db&#39;, &#39;instructors&#39;, columns, values)</span>
+        
+<span class="c1">#         self.load_all_records()</span>
+<span class="c1">#         self.instructors[self.instructor_id.get()] = instructor.to_dict()  </span>
+<span class="c1">#         self.instructor_name.delete(0, tk.END)</span>
+<span class="c1">#         self.instructor_age.delete(0, tk.END)</span>
+<span class="c1">#         self.instructor_email.delete(0, tk.END)</span>
+<span class="c1">#         self.instructor_id.delete(0, tk.END)</span>
+
+<span class="c1">#     def add_course(self):</span>
+<span class="c1">#         instructor_id = self.course_instructor_id.get()</span>
+<span class="c1">#         instructor = Instructor.load(&#39;instructor_data.json&#39;,instructor_id)</span>
+
+<span class="c1">#         if instructor_id not in self.instructors.keys() and instructor is not None:</span>
+<span class="c1">#             print(&quot;Instructor not found. Please select a valid instructor.&quot;)</span>
+<span class="c1">#             return</span>
+
+<span class="c1">#         course = Course(</span>
+<span class="c1">#             id=self.course_id.get(),</span>
+<span class="c1">#             name=self.course_name.get(),</span>
+<span class="c1">#             instructor=instructor</span>
+<span class="c1">#         )</span>
+
+<span class="c1">#         course.save(&#39;course_data.json&#39;)</span>
+<span class="c1">#         self.courses=Course.load_all(&#39;course_data.json&#39;)</span>
+
+<span class="c1">#         columns = [&#39;course_id&#39;, &#39;name&#39;, &#39;instructor_id&#39;]</span>
+<span class="c1">#         values = [course.id, course.name, instructor_id]</span>
+<span class="c1">#         SchoolDatabase.create_record(&#39;school.db&#39;, &#39;courses&#39;, columns, values)</span>
+      
+<span class="c1">#         self.course_name.delete(0, tk.END)</span>
+<span class="c1">#         self.course_id.delete(0, tk.END)</span>
+<span class="c1">#         self.course_instructor_id.delete(0, tk.END)</span>
+<span class="c1">#         self.load_all_records()</span>
+<span class="c1">#         self.update_student_course_dropdown()</span>
+<span class="c1">#         self.update_instructor_course_dropdown()</span>
+
+<span class="c1">#     def update_student_course_dropdown(self):</span>
+<span class="c1">#         with open(&#39;course_data.json&#39;, &#39;r&#39;) as file:</span>
+<span class="c1">#             courses = json.load(file)</span>
+<span class="c1">#         self.courses=courses</span>
+<span class="c1">#         course_ids= list(courses.keys())</span>
+<span class="c1">#         self.student_course_dropdown[&#39;values&#39;] = course_ids</span>
+
+<span class="c1">#     def update_instructor_course_dropdown(self):</span>
+<span class="c1">#         with open(&#39;course_data.json&#39;, &#39;r&#39;) as file:</span>
+<span class="c1">#             courses = json.load(file)</span>
+<span class="c1">#         self.courses=courses</span>
+<span class="c1">#         course_ids= list(courses.keys())</span>
+<span class="c1">#         self.instructor_course_dropdown[&#39;values&#39;] = course_ids</span>
+
+     
+
+<span class="c1">#     def register_course(self):</span>
+<span class="c1">#         student_id = self.student_id.get()</span>
+
+<span class="c1">#         if student_id not in self.students.keys():</span>
+<span class="c1">#             messagebox.showerror(&quot;Student Not Found&quot;, &quot;Student Not Found&quot;, &quot;The selected student ID is not found in the records.&quot;)</span>
+<span class="c1">#             return</span>
+
+<span class="c1">#         student = Student.load(&#39;student_data.json&#39;,self.student_id.get())</span>
+<span class="c1">#         course=Course.load(&#39;course_data.json&#39;,self.course_var.get())</span>
+
+<span class="c1">#         student.register_course(course)</span>
+<span class="c1">#         self.students=Student.load_all(&#39;student_data.json&#39;)</span>
+<span class="c1">#         self.courses=Course.load_all(&#39;course_data.json&#39;)</span>
+
+<span class="c1">#         columns = [&#39;student_id&#39;, &#39;course_id&#39;]</span>
+<span class="c1">#         values = [student_id, self.course_var.get()]</span>
+
+<span class="c1">#         SchoolDatabase.create_record(&#39;school.db&#39;, &#39;registrations&#39;, columns, values)</span>
+<span class="c1">#         self.load_all_records()</span>
+<span class="c1">#         self.update_student_course_dropdown()</span>
+ 
+
+<span class="c1">#     def assign_course(self):</span>
+
+<span class="c1">#         instructor_id = self.instructor_id.get()</span>
+<span class="c1">#         course_id = self.course_var.get()</span>
+<span class="c1">#         if instructor_id not in self.instructors.keys():</span>
+<span class="c1">#             messagebox.showerror(&quot;Instructor Not Found&quot;, &quot;The selected instructor ID is not found in the records.&quot;)</span>
+<span class="c1">#             return</span>
+<span class="c1">#         instructor=Instructor.load(&#39;instructor_data.json&#39;,instructor_id)</span>
+<span class="c1">#         course=Course.load(&#39;course_data.json&#39;,course_id)</span>
+
+<span class="c1">#         instructor.assign_course(course)</span>
+<span class="c1">#         instructor.save(&#39;instructor_data.json&#39;)</span>
+<span class="c1">#         self.instructors=Instructor.load_all(&#39;instructor_data.json&#39;)</span>
+<span class="c1">#         self.courses=Course.load_all(&#39;course_data.json&#39;)</span>
+
+<span class="c1">#         update_values = {&#39;instructor_id&#39;: instructor_id}</span>
+<span class="c1">#         condition = f&quot;course_id = &#39;{course_id}&#39;&quot;</span>
+<span class="c1">#         SchoolDatabase.update_record(&#39;school.db&#39;, &#39;courses&#39;, update_values, condition)</span>
+
+<span class="c1">#         self.load_all_records()</span>
+<span class="c1">#         self.update_instructor_course_dropdown()</span>
+
+
+
+
+<span class="c1"># if __name__ == &quot;__main__&quot;:</span>
+<span class="c1">#     root = tk.Tk()</span>
+<span class="c1">#     app = SchoolManagementSystem(root)</span>
+<span class="c1">#     SchoolDatabase.backup_database(&#39;school.db&#39;, &#39;school_backup.db&#39;)</span>
+<span class="c1">#     root.mainloop()</span>
+
+
+<span class="c1"># PART 3</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtWidgets</span> <span class="kn">import</span> <span class="p">(</span><span class="n">QApplication</span><span class="p">,</span> <span class="n">QMainWindow</span><span class="p">,</span> <span class="n">QWidget</span><span class="p">,</span> <span class="n">QTabWidget</span><span class="p">,</span> 
+                             <span class="n">QVBoxLayout</span><span class="p">,</span> <span class="n">QLabel</span><span class="p">,</span> <span class="n">QLineEdit</span><span class="p">,</span> <span class="n">QPushButton</span><span class="p">,</span> 
+                             <span class="n">QComboBox</span><span class="p">,</span> <span class="n">QFormLayout</span><span class="p">,</span> <span class="n">QTableWidget</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">,</span> <span class="n">QFileDialog</span><span class="p">,</span>
+                             <span class="n">QHeaderView</span><span class="p">,</span> <span class="n">QMessageBox</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">Qt</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+
+<div class="viewcode-block" id="SchoolManagementSystem">
+<a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystem">[docs]</a>
+<span class="k">class</span> <span class="nc">SchoolManagementSystem</span><span class="p">(</span><span class="n">QMainWindow</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main class for the School Management System GUI application. </span>
+<span class="sd">    Handles student, instructor, and course management including adding, </span>
+<span class="sd">    deleting, and editing records, as well as course registration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the School Management System application.</span>
+<span class="sd">        Sets up the window, loads data, and creates the UI tabs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;School Management System&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
+
+     
+        <span class="bp">self</span><span class="o">.</span><span class="n">students</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">courses</span> <span class="o">=</span> <span class="p">{}</span>
+
+       
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;student_data.json&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">students</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="s1">&#39;student_data.json&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_data</span><span class="p">(</span><span class="s1">&#39;student_data.json&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">students</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;instructor_data.json&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="s1">&#39;instructor_data.json&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_data</span><span class="p">(</span><span class="s1">&#39;instructor_data.json&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;course_data.json&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">courses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="s1">&#39;course_data.json&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_data</span><span class="p">(</span><span class="s1">&#39;course_data.json&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">courses</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_var</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">central_widget</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setCentralWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">central_widget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">central_widget</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tabs</span> <span class="o">=</span> <span class="n">QTabWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tabs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_student_tab</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_instructor_tab</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_course_tab</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_display_tab</span><span class="p">()</span>
+
+<div class="viewcode-block" id="SchoolManagementSystem.create_display_tab">
+<a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystem.create_display_tab">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_display_tab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates the &#39;Records&#39; tab for viewing, searching, editing, and exporting records.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">records_tab</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tabs</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="n">records_tab</span><span class="p">,</span> <span class="s2">&quot;Records&quot;</span><span class="p">)</span>
+
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">(</span><span class="n">records_tab</span><span class="p">)</span>
+
+        <span class="n">search_layout</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">search_layout</span><span class="p">)</span>
+
+        <span class="n">search_label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Search:&quot;</span><span class="p">)</span>
+        <span class="n">search_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">search_label</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">search_var</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">()</span>
+        <span class="n">search_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">search_var</span><span class="p">)</span>
+
+        <span class="n">search_button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Search&quot;</span><span class="p">)</span>
+        <span class="n">search_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">search_records</span><span class="p">)</span>
+        <span class="n">search_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">search_button</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span> <span class="o">=</span> <span class="n">QTableWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">setColumnCount</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">setHorizontalHeaderLabels</span><span class="p">([</span><span class="s2">&quot;ID&quot;</span><span class="p">,</span> <span class="s2">&quot;Name&quot;</span><span class="p">,</span> <span class="s2">&quot;Type&quot;</span><span class="p">,</span> <span class="s2">&quot;Additional Info&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">horizontalHeader</span><span class="p">()</span><span class="o">.</span><span class="n">setSectionResizeMode</span><span class="p">(</span><span class="n">QHeaderView</span><span class="o">.</span><span class="n">Stretch</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="p">)</span>
+
+        <span class="n">button_layout</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">button_layout</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">edit_button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Edit Record&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">edit_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edit_record</span><span class="p">)</span>
+        <span class="n">button_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edit_button</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">delete_button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Delete Record&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delete_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delete_record</span><span class="p">)</span>
+        <span class="n">button_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delete_button</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">export_button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Export to CSV&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">export_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">export_to_csv</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">export_button</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_all_records</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementSystem.export_to_csv">
+<a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystem.export_to_csv">[docs]</a>
+    <span class="k">def</span> <span class="nf">export_to_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Exports the current records to a CSV file selected by the user.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="n">QFileDialog</span><span class="o">.</span><span class="n">Options</span><span class="p">()</span>
+        <span class="n">file_path</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">QFileDialog</span><span class="o">.</span><span class="n">getSaveFileName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Save CSV&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;CSV Files (*.csv);;All Files (*)&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">file_path</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">file_path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.csv&#39;</span><span class="p">):</span>
+            <span class="n">file_path</span> <span class="o">+=</span> <span class="s1">&#39;.csv&#39;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+                
+                <span class="n">headers</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">horizontalHeaderItem</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">columnCount</span><span class="p">())]</span>
+                <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
+
+                
+                <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+                    <span class="n">row_data</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">columnCount</span><span class="p">()):</span>
+                        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
+                        <span class="n">row_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                    <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">row_data</span><span class="p">)</span>
+
+            <span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Export Successful&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Records have been successfully exported to </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">QMessageBox</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Export Failed&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Failed to export records: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementSystem.load_all_records">
+<a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystem.load_all_records">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_all_records</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads all records (students, instructors, courses) into the table for display.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">setRowCount</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  
+
+  
+        <span class="k">for</span> <span class="n">student_id</span><span class="p">,</span> <span class="n">student_data</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">students</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">student_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;N/A&#39;</span><span class="p">)</span>
+            <span class="n">age</span> <span class="o">=</span> <span class="n">student_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;N/A&#39;</span><span class="p">)</span>
+            <span class="n">email</span> <span class="o">=</span> <span class="n">student_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;N/A&#39;</span><span class="p">)</span>
+            <span class="n">row_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">insertRow</span><span class="p">(</span><span class="n">row_position</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">row_position</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">student_id</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">row_position</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">row_position</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">(</span><span class="s2">&quot;Student&quot;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">row_position</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Age: </span><span class="si">{</span><span class="n">age</span><span class="si">}</span><span class="s2">, Email: </span><span class="si">{</span><span class="n">email</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+
+   
+        <span class="k">for</span> <span class="n">instructor_id</span><span class="p">,</span> <span class="n">instructor_data</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">instructor_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;N/A&#39;</span><span class="p">)</span>
+            <span class="n">age</span> <span class="o">=</span> <span class="n">instructor_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;N/A&#39;</span><span class="p">)</span>
+            <span class="n">email</span> <span class="o">=</span> <span class="n">instructor_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;N/A&#39;</span><span class="p">)</span>
+            <span class="n">row_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">insertRow</span><span class="p">(</span><span class="n">row_position</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">row_position</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">instructor_id</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">row_position</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">row_position</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">(</span><span class="s2">&quot;Instructor&quot;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">row_position</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Age: </span><span class="si">{</span><span class="n">age</span><span class="si">}</span><span class="s2">, Email: </span><span class="si">{</span><span class="n">email</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+
+
+        <span class="k">for</span> <span class="n">course_id</span><span class="p">,</span> <span class="n">course_data</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">courses</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">course_name</span> <span class="o">=</span> <span class="n">course_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;N/A&#39;</span><span class="p">)</span>
+            <span class="n">instructor_info</span> <span class="o">=</span> <span class="n">course_data</span><span class="p">[</span><span class="s1">&#39;instructor&#39;</span><span class="p">]</span>
+            <span class="n">instructor_details</span> <span class="o">=</span> <span class="s2">&quot;Instructor: N/A&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">instructor_info</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;Instructor: </span><span class="si">{</span><span class="n">instructor_info</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">row_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">insertRow</span><span class="p">(</span><span class="n">row_position</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">row_position</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">course_id</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">row_position</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">course_name</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">row_position</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">(</span><span class="s2">&quot;Course&quot;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="n">row_position</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">QTableWidgetItem</span><span class="p">(</span><span class="n">instructor_details</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementSystem.edit_record">
+<a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystem.edit_record">[docs]</a>
+    <span class="k">def</span> <span class="nf">edit_record</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Allows the user to edit a selected record from the table.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">selected_row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">currentRow</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">selected_row</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Edit Record&quot;</span><span class="p">,</span> <span class="s2">&quot;Please select a record to edit.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">record_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">selected_row</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="n">record_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">selected_row</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+
+       
+        <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">columnCount</span><span class="p">()):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">selected_row</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span><span class="o">.</span><span class="n">setFlags</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">selected_row</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span><span class="o">.</span><span class="n">flags</span><span class="p">()</span> <span class="o">|</span> <span class="n">Qt</span><span class="o">.</span><span class="n">ItemIsEditable</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">itemChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_record</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">record_id</span><span class="p">,</span> <span class="n">record_type</span><span class="p">))</span>
+        <span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Edit Record&quot;</span><span class="p">,</span> <span class="s2">&quot;You can now edit the selected record. Don&#39;t forget to save the changes!&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementSystem.save_record">
+<a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystem.save_record">[docs]</a>
+    <span class="k">def</span> <span class="nf">save_record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">record_id</span><span class="p">,</span> <span class="n">record_type</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Saves changes made to a record after editing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+        <span class="n">column</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">column</span><span class="p">()</span>
+        <span class="n">new_value</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">record_type</span> <span class="o">==</span> <span class="s2">&quot;Student&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">column</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  
+                <span class="bp">self</span><span class="o">.</span><span class="n">students</span><span class="p">[</span><span class="n">record_id</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_value</span>
+            <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span> 
+                <span class="n">age</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">new_value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">students</span><span class="p">[</span><span class="n">record_id</span><span class="p">][</span><span class="s1">&#39;age&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">age</span>
+            <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>  
+                <span class="n">email</span> <span class="o">=</span> <span class="n">new_value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">students</span><span class="p">[</span><span class="n">record_id</span><span class="p">][</span><span class="s1">&#39;email&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">email</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">students</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;student_data.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">))</span>
+
+        <span class="k">elif</span> <span class="n">record_type</span> <span class="o">==</span> <span class="s2">&quot;Instructor&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">column</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  
+                <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span><span class="p">[</span><span class="n">record_id</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_value</span>
+            <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>  
+                <span class="n">age</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">new_value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span><span class="p">[</span><span class="n">record_id</span><span class="p">][</span><span class="s1">&#39;age&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">age</span>
+            <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span> 
+                <span class="n">email</span> <span class="o">=</span> <span class="n">new_value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span><span class="p">[</span><span class="n">record_id</span><span class="p">][</span><span class="s1">&#39;email&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">email</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instructors</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;instructor_data.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">))</span>
+
+        <span class="k">elif</span> <span class="n">record_type</span> <span class="o">==</span> <span class="s2">&quot;Course&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">column</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  
+                <span class="bp">self</span><span class="o">.</span><span class="n">courses</span><span class="p">[</span><span class="n">record_id</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_value</span>
+            <span class="k">elif</span> <span class="n">column</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>  
+                <span class="n">instructor_name</span> <span class="o">=</span> <span class="n">new_value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">courses</span><span class="p">[</span><span class="n">record_id</span><span class="p">][</span><span class="s1">&#39;instructor&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">instructor_name</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">courses</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;course_data.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">))</span>
+
+        <span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Save Record&quot;</span><span class="p">,</span> <span class="s2">&quot;The changes have been saved successfully.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementSystem.delete_record">
+<a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystem.delete_record">[docs]</a>
+    <span class="k">def</span> <span class="nf">delete_record</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Deletes the selected record from the records table and the corresponding JSON file.</span>
+<span class="sd">        If the record is of type &quot;Student&quot;, &quot;Instructor&quot;, or &quot;Course&quot;, it is removed from the respective dictionary </span>
+<span class="sd">        and the updated data is saved back to the corresponding JSON file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">selected_row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">currentRow</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">selected_row</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">QMessageBox</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Delete Record&quot;</span><span class="p">,</span> <span class="s2">&quot;Please select a record to delete.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">record_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">selected_row</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="n">record_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">selected_row</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">record_type</span> <span class="o">==</span> <span class="s2">&quot;Student&quot;</span> <span class="ow">and</span> <span class="n">record_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">students</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">students</span><span class="p">[</span><span class="n">record_id</span><span class="p">]</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">students</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;student_data.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">))</span>
+
+        <span class="k">elif</span> <span class="n">record_type</span> <span class="o">==</span> <span class="s2">&quot;Instructor&quot;</span> <span class="ow">and</span> <span class="n">record_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span><span class="p">[</span><span class="n">record_id</span><span class="p">]</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instructors</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;instructor_data.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">))</span>
+
+        <span class="k">elif</span> <span class="n">record_type</span> <span class="o">==</span> <span class="s2">&quot;Course&quot;</span> <span class="ow">and</span> <span class="n">record_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">courses</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">courses</span><span class="p">[</span><span class="n">record_id</span><span class="p">]</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">courses</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;course_data.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">removeRow</span><span class="p">(</span><span class="n">selected_row</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_all_records</span><span class="p">()</span>
+        <span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;Delete Record&quot;</span><span class="p">,</span> <span class="s2">&quot;Record deleted successfully.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementSystem.create_student_tab">
+<a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystem.create_student_tab">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_student_tab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates and sets up the Student tab in the GUI, which allows the user to add a new student </span>
+<span class="sd">        and register them for a course.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">student_tab</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tabs</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="n">student_tab</span><span class="p">,</span> <span class="s2">&quot;Student&quot;</span><span class="p">)</span>
+
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">QFormLayout</span><span class="p">(</span><span class="n">student_tab</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_name</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_age</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_email</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_id</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">()</span>
+
+        <span class="n">layout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Name:&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">student_name</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Age:&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">student_age</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Email:&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">student_email</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Student ID:&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">student_id</span><span class="p">)</span>
+
+        <span class="n">add_student_button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Add Student&quot;</span><span class="p">)</span>
+        <span class="n">add_student_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">add_student</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">add_student_button</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_course_dropdown</span> <span class="o">=</span> <span class="n">QComboBox</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_student_course_dropdown</span><span class="p">()</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Register for Course:&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">student_course_dropdown</span><span class="p">)</span>
+
+        <span class="n">register_course_button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Register for Course&quot;</span><span class="p">)</span>
+        <span class="n">register_course_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">register_course</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">register_course_button</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementSystem.search_records">
+<a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystem.search_records">[docs]</a>
+    <span class="k">def</span> <span class="nf">search_records</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Searches for records in the table that match the search query and hides rows that do not match.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">search_query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_var</span><span class="o">.</span><span class="n">text</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+            <span class="n">match_found</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">columnCount</span><span class="p">()):</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">search_query</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">text</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                    <span class="n">match_found</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">break</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">records_table</span><span class="o">.</span><span class="n">setRowHidden</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="ow">not</span> <span class="n">match_found</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementSystem.create_instructor_tab">
+<a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystem.create_instructor_tab">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_instructor_tab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates and sets up the Instructor tab in the GUI, which allows the user to add a new instructor </span>
+<span class="sd">        and assign them to a course.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">instructor_tab</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tabs</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="n">instructor_tab</span><span class="p">,</span> <span class="s2">&quot;Instructor&quot;</span><span class="p">)</span>
+
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">QFormLayout</span><span class="p">(</span><span class="n">instructor_tab</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_name</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_age</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_email</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_id</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">()</span>
+
+        <span class="n">layout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Name:&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructor_name</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Age:&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructor_age</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Email:&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructor_email</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Instructor ID:&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructor_id</span><span class="p">)</span>
+
+        <span class="n">add_instructor_button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Add Instructor&quot;</span><span class="p">)</span>
+        <span class="n">add_instructor_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">add_instructor</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">add_instructor_button</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_course_dropdown</span> <span class="o">=</span> <span class="n">QComboBox</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_instructor_course_dropdown</span><span class="p">()</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Assign to Course:&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructor_course_dropdown</span><span class="p">)</span>
+
+        <span class="n">assign_course_button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Assign to Course&quot;</span><span class="p">)</span>
+        <span class="n">assign_course_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assign_course</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">assign_course_button</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementSystem.create_course_tab">
+<a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystem.create_course_tab">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_course_tab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates and sets up the Course tab in the GUI, which allows the user to add a new course </span>
+<span class="sd">        and associate it with an instructor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">course_tab</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tabs</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="n">course_tab</span><span class="p">,</span> <span class="s2">&quot;Course&quot;</span><span class="p">)</span>
+
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">QFormLayout</span><span class="p">(</span><span class="n">course_tab</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_name</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_id</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_instructor_id</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">()</span>
+
+        <span class="n">layout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Course Name:&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">course_name</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Course ID:&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">course_id</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Instructor ID:&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">course_instructor_id</span><span class="p">)</span>
+
+        <span class="n">add_course_button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Add Course&quot;</span><span class="p">)</span>
+        <span class="n">add_course_button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">add_course</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">add_course_button</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementSystem.load_data">
+<a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystem.load_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads and returns the data from the specified JSON file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementSystem.save_data">
+<a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystem.save_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">save_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Saves the provided data to the specified JSON file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementSystem.add_student">
+<a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystem.add_student">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_student</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds a new student to the system based on the form input fields. </span>
+<span class="sd">        Saves the student data to the JSON file and database, then clears the input fields.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">student_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">student_id</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="n">student</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">student_name</span><span class="o">.</span><span class="n">text</span><span class="p">(),</span>
+            <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">student_age</span><span class="o">.</span><span class="n">text</span><span class="p">()),</span>
+            <span class="s1">&#39;email&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">student_email</span><span class="o">.</span><span class="n">text</span><span class="p">(),</span>
+            <span class="s1">&#39;student_id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">student_id</span><span class="o">.</span><span class="n">text</span><span class="p">(),</span>
+        <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">students</span><span class="p">[</span><span class="n">student_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">student</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_data</span><span class="p">(</span><span class="s1">&#39;student_data.json&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">students</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_name</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_age</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_email</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_id</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_student_course_dropdown</span><span class="p">()</span>
+
+        <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;student_id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">]</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">student_id</span><span class="p">,</span> <span class="n">student</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">student</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">],</span> <span class="n">student</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]]</span>
+        <span class="n">SchoolDatabase</span><span class="o">.</span><span class="n">create_record</span><span class="p">(</span><span class="s1">&#39;school.db&#39;</span><span class="p">,</span> <span class="s1">&#39;students&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_all_records</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementSystem.add_instructor">
+<a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystem.add_instructor">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_instructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds a new instructor to the system based on the form input fields. </span>
+<span class="sd">        Saves the instructor data to the JSON file and database, then clears the input fields.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">instructor_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructor_id</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="n">instructor</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructor_name</span><span class="o">.</span><span class="n">text</span><span class="p">(),</span>
+            <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instructor_age</span><span class="o">.</span><span class="n">text</span><span class="p">()),</span>
+            <span class="s1">&#39;email&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructor_email</span><span class="o">.</span><span class="n">text</span><span class="p">(),</span>
+            <span class="s1">&#39;instructor_id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructor_id</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span><span class="p">[</span><span class="n">instructor_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">instructor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_data</span><span class="p">(</span><span class="s1">&#39;instructor_data.json&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_name</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_age</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_email</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_id</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_instructor_course_dropdown</span><span class="p">()</span>
+
+        <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;instructor_id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">]</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">instructor_id</span><span class="p">,</span> <span class="n">instructor</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">instructor</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">],</span> <span class="n">instructor</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]]</span>
+        <span class="n">SchoolDatabase</span><span class="o">.</span><span class="n">create_record</span><span class="p">(</span><span class="s1">&#39;school.db&#39;</span><span class="p">,</span> <span class="s1">&#39;instructors&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_all_records</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementSystem.add_course">
+<a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystem.add_course">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_course</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds a new course to the system based on the form input fields. </span>
+<span class="sd">        Saves the course data to the JSON file and database, then clears the input fields.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">course_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">course_id</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="n">instructor_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">course_instructor_id</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="n">instructor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">instructor_id</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="n">course</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">course_id</span><span class="p">,</span>    
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">course_name</span><span class="o">.</span><span class="n">text</span><span class="p">(),</span>
+            <span class="s1">&#39;instructor&#39;</span><span class="p">:</span> <span class="n">instructor</span>
+        <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">courses</span><span class="p">[</span><span class="n">course_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">course</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_data</span><span class="p">(</span><span class="s1">&#39;course_data.json&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">courses</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_name</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_id</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_instructor_id</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_student_course_dropdown</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_instructor_course_dropdown</span><span class="p">()</span>
+
+        <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;course_id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;instructor_id&#39;</span><span class="p">]</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">course_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">course_name</span><span class="o">.</span><span class="n">text</span><span class="p">(),</span> <span class="n">instructor_id</span><span class="p">]</span>
+        <span class="n">SchoolDatabase</span><span class="o">.</span><span class="n">create_record</span><span class="p">(</span><span class="s1">&#39;school.db&#39;</span><span class="p">,</span> <span class="s1">&#39;courses&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_all_records</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementSystem.update_student_course_dropdown">
+<a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystem.update_student_course_dropdown">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_student_course_dropdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the course dropdown for the Student tab with the list of available courses.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_course_dropdown</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_course_dropdown</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">courses</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementSystem.update_instructor_course_dropdown">
+<a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystem.update_instructor_course_dropdown">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_instructor_course_dropdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the course dropdown for the Instructor tab with the list of courses without assigned instructors.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_course_dropdown</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">empty_instructor_course_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">course_id</span> <span class="k">for</span> <span class="n">course_id</span><span class="p">,</span> <span class="n">course</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">courses</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">course</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;instructor&#39;</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_course_dropdown</span><span class="o">.</span><span class="n">addItems</span><span class="p">(</span><span class="n">empty_instructor_course_ids</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementSystem.register_course">
+<a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystem.register_course">[docs]</a>
+    <span class="k">def</span> <span class="nf">register_course</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Registers the student for the selected course and updates the course registration in the database.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">student_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">student_id</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="n">course_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">student_course_dropdown</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">student_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">students</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_error_message</span><span class="p">(</span><span class="s2">&quot;Student Not Found&quot;</span><span class="p">,</span> <span class="s2">&quot;The selected student ID is not found in the system.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">registration_data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;student_id&#39;</span><span class="p">:</span> <span class="n">student_id</span><span class="p">,</span>
+            <span class="s1">&#39;course_id&#39;</span><span class="p">:</span> <span class="n">course_id</span>
+        <span class="p">}</span>
+
+        <span class="n">SchoolDatabase</span><span class="o">.</span><span class="n">create_record</span><span class="p">(</span><span class="s1">&#39;school.db&#39;</span><span class="p">,</span> <span class="s1">&#39;registrations&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">registration_data</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="nb">list</span><span class="p">(</span><span class="n">registration_data</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_all_records</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementSystem.assign_course">
+<a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystem.assign_course">[docs]</a>
+    <span class="k">def</span> <span class="nf">assign_course</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Assigns the instructor to the selected course and updates the course assignment in the database.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">instructor_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructor_id</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="n">course_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructor_course_dropdown</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">instructor_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_error_message</span><span class="p">(</span><span class="s2">&quot;Instructor Not Found&quot;</span><span class="p">,</span> <span class="s2">&quot;The selected instructor ID is not found in the system.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">courses</span><span class="p">[</span><span class="n">course_id</span><span class="p">][</span><span class="s1">&#39;instructor&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span><span class="p">[</span><span class="n">instructor_id</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_data</span><span class="p">(</span><span class="s1">&#39;course_data.json&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">courses</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_instructor_course_dropdown</span><span class="p">()</span>
+
+        <span class="n">SchoolDatabase</span><span class="o">.</span><span class="n">update_record</span><span class="p">(</span><span class="s1">&#39;school.db&#39;</span><span class="p">,</span> <span class="s1">&#39;courses&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;instructor_id&#39;</span><span class="p">],</span> <span class="p">[</span><span class="n">instructor_id</span><span class="p">],</span> <span class="s1">&#39;course_id&#39;</span><span class="p">,</span> <span class="n">course_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_all_records</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="SchoolManagementSystem.show_error_message">
+<a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystem.show_error_message">[docs]</a>
+    <span class="k">def</span> <span class="nf">show_error_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Displays an error message dialog box with the specified title and message.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            title (str): The title of the error message box.</span>
+<span class="sd">            message (str): The content of the error message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">msg_box</span> <span class="o">=</span> <span class="n">QMessageBox</span><span class="p">()</span>
+        <span class="n">msg_box</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Critical</span><span class="p">)</span>
+        <span class="n">msg_box</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="n">msg_box</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+        <span class="n">msg_box</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span></div>
+</div>
+
+
+
+
+
+
+
+<span class="c1"># if __name__ == &quot;__main__&quot;:</span>
+<span class="c1">#     # app = QApplication(sys.argv)</span>
+<span class="c1">#     # window = SchoolManagementSystem()</span>
+<span class="c1">#     # window.show()</span>
+<span class="c1">#     SchoolDatabase.read_records(&#39;school.db&#39;, &#39;students&#39;)</span>
+<span class="c1">#     SchoolDatabase.read_records(&#39;school.db&#39;, &#39;instructors&#39;)</span>
+<span class="c1">#     SchoolDatabase.read_records(&#39;school.db&#39;, &#39;courses&#39;)</span>
+<span class="c1">#     SchoolDatabase.read_records(&#39;school.db&#39;, &#39;registrations&#39;)</span>
+<span class="c1">#     # sys.exit(app.exec_())</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Yehya.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

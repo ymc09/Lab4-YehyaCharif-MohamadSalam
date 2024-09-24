@@ -1,0 +1,8 @@
+ID,Name,Type,Additional Info
+E43,Elie,Student,"Age: 43, Email: eric@school.con"
+U54,Uri,Student,"Age: 54, Email: uri@school.com"
+M55,Moe,Instructor,"Age: 55, Email: moe@school.com"
+EEECE432,NETWORK,Course,Instructor: Moe
+EECE201,INTRO,Course,Instructor: Moe
+EECE302,INTROTOJAVA,Course,Instructor: N/A
+EECE800,FINAL PROJECT,Course,Instructor: Moe
