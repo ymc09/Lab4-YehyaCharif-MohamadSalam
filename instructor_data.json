@@ -1,0 +1,11 @@
+{
+    "M54": {
+        "name": "Moe",
+        "age": 54,
+        "email": "m@s.com",
+        "instructor_id": "M54",
+        "assigned_courses": [
+            "EECE544"
+        ]
+    }
+}

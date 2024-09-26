@@ -1,0 +1,11 @@
+{
+    "U53": {
+        "name": "Ury",
+        "age": 53,
+        "email": "u@s.com",
+        "student_id": "U53",
+        "registered_courses": [
+            "EECE544"
+        ]
+    }
+}
