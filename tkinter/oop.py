@@ -329,7 +329,40 @@ import json
 import os
 
 class SchoolManagementSystemApp:
+    """
+    A class to create a School Management System GUI application.
+
+    Attributes:
+        root (tk.Tk): The main application window.
+        students (list): List of students in the system.
+        instructors (list): List of instructors in the system.
+        courses (list): List of courses in the system.
+
+    Methods:
+        create_gui(): Creates the graphical user interface (GUI) for the application.
+        load_data_from_db(): Loads data from the database and populates the application.
+        create_student_form(tab): Creates the form for student input in the GUI.
+        create_instructor_form(tab): Creates the form for instructor input in the GUI.
+        create_course_form(tab): Creates the form for course input in the GUI.
+        create_record_display_area(): Creates the display area for showing records.
+        create_edit_delete_buttons(): Creates buttons for editing and deleting records.
+        create_save_load_buttons(): Creates buttons for saving and loading data.
+        register_student_to_course(): Registers a student to a selected course.
+        add_student(): Adds a new student to the system.
+        add_instructor(): Adds a new instructor to the system.
+        add_course(): Adds a new course to the system.
+        edit_record(): Placeholder function for editing a record (not implemented).
+        delete_record(): Deletes a selected record from the display.
+        save_data(): Saves current data to a JSON file.
+        load_data(): Loads saved data from a JSON file.
+    """
     def __init__(self, root):
+        """
+        Initializes the SchoolManagementSystemApp instance.
+
+        Args:
+            root (tk.Tk): The root window where the app will be built.
+        """
         self.root = root
         self.root.title("School Management System")
         self.root.geometry("800x600")
@@ -342,6 +375,7 @@ class SchoolManagementSystemApp:
         #self.load_data_from_db()
 
     def create_gui(self):
+        """Creates the graphical user interface (GUI) components for the application."""
         self.tab_control = ttk.Notebook(self.root)
         self.student_tab = ttk.Frame(self.tab_control)
         self.instructor_tab = ttk.Frame(self.tab_control)
@@ -358,6 +392,7 @@ class SchoolManagementSystemApp:
         self.create_save_load_buttons()
 
     def load_data_from_db(self):
+        """Loads data from the database into the system."""
         try:
             student_records = data.get_all_students() 
             self.students = [Student.from_dict(student) for student in student_records]
@@ -388,6 +423,12 @@ class SchoolManagementSystemApp:
             messagebox.showerror("Error", str(e))
 
     def create_student_form(self, tab):
+        """
+        Creates the form for adding student information.
+
+        Args:
+            tab (tk.Frame): The tab where the form will be placed.
+        """
         self.student_name_label = tk.Label(tab, text="Name:")
         self.student_name_label.grid(row=0, column=0)
         self.student_name_entry = tk.Entry(tab)
@@ -420,6 +461,12 @@ class SchoolManagementSystemApp:
         self.add_student_button.grid(row=6, column=0, columnspan=2)
 
     def create_instructor_form(self, tab):
+        """
+        Creates the form for adding instructor information.
+
+        Args:
+            tab (tk.Frame): The tab where the form will be placed.
+        """
         self.instructor_name_label = tk.Label(tab, text="Name:")
         self.instructor_name_label.grid(row=0, column=0)
         self.instructor_name_entry = tk.Entry(tab)
@@ -444,6 +491,12 @@ class SchoolManagementSystemApp:
         self.add_instructor_button.grid(row=4, column=0, columnspan=2)
 
     def create_course_form(self, tab):
+        """
+        Creates the form for adding course information.
+
+        Args:
+            tab (tk.Frame): The tab where the form will be placed.
+        """
         self.course_id_label = tk.Label(tab, text="Course ID:")
         self.course_id_label.grid(row=0, column=0)
         self.course_id_entry = tk.Entry(tab)
@@ -463,12 +516,14 @@ class SchoolManagementSystemApp:
         self.add_course_button.grid(row=3, column=0, columnspan=2)
 
     def create_record_display_area(self):
+        """Creates the display area for showing student, instructor, and course records."""
         self.tree = ttk.Treeview(self.root, columns=("Type", "Details"), show="headings")
         self.tree.heading("Type", text="Type")
         self.tree.heading("Details", text="Details")
         self.tree.pack(fill=tk.BOTH, expand=True)
 
     def create_edit_delete_buttons(self):
+        """Creates buttons for editing and deleting selected records."""
         self.edit_delete_frame = tk.Frame(self.root)
         self.edit_delete_frame.pack()
         self.edit_button = tk.Button(self.edit_delete_frame, text="Edit", command=self.edit_record)
@@ -478,6 +533,7 @@ class SchoolManagementSystemApp:
         self.delete_button.grid(row=0, column=1, padx=5)
 
     def create_save_load_buttons(self):
+        """Creates buttons for saving and loading data."""
         self.save_load_frame = tk.Frame(self.root)
         self.save_load_frame.pack()
         self.save_button = tk.Button(self.save_load_frame, text="Save Data", command=self.save_data)
@@ -487,6 +543,7 @@ class SchoolManagementSystemApp:
         self.load_button.grid(row=0, column=1, padx=5)
 
     def register_student_to_course(self):
+        """Registers a student to a course selected from the dropdown menu."""
         course_name = self.course_register_combobox.get()
         student_name = self.student_name_entry.get()
         
@@ -497,6 +554,7 @@ class SchoolManagementSystemApp:
             messagebox.showerror("Error", str(e))
 
     def add_student(self):
+        """Adds a new student to the system."""
         name = self.student_name_entry.get()
         age = int(self.student_age_entry.get())
         email = self.student_email_entry.get()
@@ -510,6 +568,7 @@ class SchoolManagementSystemApp:
             messagebox.showerror("Error", str(e))
 
     def add_instructor(self):
+        """Adds a new instructor to the system."""
         name = self.instructor_name_entry.get()
         age = int(self.instructor_age_entry.get())
         email = self.instructor_email_entry.get()
@@ -524,6 +583,7 @@ class SchoolManagementSystemApp:
             messagebox.showerror("Error", str(e))
 
     def add_course(self):
+        """Adds a new course to the system."""
         course_id = self.course_id_entry.get()
         course_name = self.course_name_entry.get()
         instructor_name = self.course_instructor_combobox.get()
@@ -538,6 +598,7 @@ class SchoolManagementSystemApp:
 
 
     def edit_record(self):
+        """Placeholder method for editing a selected record."""
         selected_item = self.tree.selection()
         if not selected_item:
             messagebox.showwarning("Warning", "No record selected.")
@@ -546,6 +607,7 @@ class SchoolManagementSystemApp:
         messagebox.showinfo("Info", "Edit feature is not implemented in this example.")
 
     def delete_record(self):
+        """Deletes the selected record from the system."""
         selected_item = self.tree.selection()
         if not selected_item:
             messagebox.showwarning("Warning", "No record selected.")
@@ -555,6 +617,7 @@ class SchoolManagementSystemApp:
         messagebox.showinfo("Info", "Record deleted successfully!")
 
     def save_data(self):
+        """Saves the current data to a JSON file."""
         data = {
             "students": [student.to_dict() for student in self.students],
             "instructors": [instructor.to_dict() for instructor in self.instructors],
@@ -565,6 +628,7 @@ class SchoolManagementSystemApp:
         messagebox.showinfo("Success", "Data saved successfully!")
 
     def load_data(self):
+        """Loads data from a JSON file."""
         if not os.path.exists("school_data.json"):
             messagebox.showerror("Error", "No saved data file found.")
             return
