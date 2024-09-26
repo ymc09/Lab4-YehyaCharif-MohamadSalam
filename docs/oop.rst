@@ -1,5 +1,4 @@
 oop module
-==========
 
 .. automodule:: oop
    :members:
