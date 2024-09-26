@@ -2,7 +2,7 @@ import re
 import json
 import os
 from typing import List, Dict, Any
-import oop.tkinter.data as data
+import data as data
 
 def is_valid_email(email: str) -> bool:
     """
