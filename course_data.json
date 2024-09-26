@@ -1,0 +1,30 @@
+{
+    "EECE444": {
+        "id": "EECE444",
+        "name": "networks",
+        "instructor": {
+            "name": "Moe",
+            "age": 54,
+            "email": "m@s.com",
+            "instructor_id": "M54",
+            "assigned_courses": []
+        },
+        "enrolled_students": [
+            "U53"
+        ]
+    },
+    "EECE544": {
+        "id": "EECE544",
+        "name": "NEO-CODE",
+        "instructor": {
+            "name": "Moe",
+            "age": 54,
+            "email": "m@s.com",
+            "instructor_id": "M54",
+            "assigned_courses": [
+                "EECE544"
+            ]
+        },
+        "enrolled_students": []
+    }
+}
