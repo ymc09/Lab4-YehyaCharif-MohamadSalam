@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>oop &mdash; tkinterschool 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            tkinterschool
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">tkinter</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">tkinterschool</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">oop</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for oop</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">import</span> <span class="nn">data</span> <span class="k">as</span> <span class="nn">data</span>
+
+<div class="viewcode-block" id="is_valid_email"><a class="viewcode-back" href="../oop.html#oop.is_valid_email">[docs]</a><span class="k">def</span> <span class="nf">is_valid_email</span><span class="p">(</span><span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if the provided email is in a valid format.</span>
+
+<span class="sd">    :param email: The email address to validate.</span>
+<span class="sd">    :type email: str</span>
+<span class="sd">    :return: True if the email is valid, False otherwise.</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;^[\w\.-]+@[\w\.-]+\.\w+$&#39;</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">email</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="is_non_negative_age"><a class="viewcode-back" href="../oop.html#oop.is_non_negative_age">[docs]</a><span class="k">def</span> <span class="nf">is_non_negative_age</span><span class="p">(</span><span class="n">age</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if the provided age is non-negative.</span>
+
+<span class="sd">    :param age: The age to validate.</span>
+<span class="sd">    :type age: int</span>
+<span class="sd">    :return: True if the age is non-negative, False otherwise.</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">age</span> <span class="o">&gt;=</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="Person"><a class="viewcode-back" href="../oop.html#oop.Person">[docs]</a><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class representing a person with basic attributes like name, age, and email.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">age</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize a new instance of the Person class.</span>
+
+<span class="sd">        :param name: The name of the person.</span>
+<span class="sd">        :type name: str</span>
+<span class="sd">        :param age: The age of the person.</span>
+<span class="sd">        :type age: int</span>
+<span class="sd">        :param email: The email of the person.</span>
+<span class="sd">        :type email: str</span>
+<span class="sd">        :raises ValueError: If the age is negative or the email is invalid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_non_negative_age</span><span class="p">(</span><span class="n">age</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Age must be non-negative.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_valid_email</span><span class="p">(</span><span class="n">email</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid email format.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_email</span> <span class="o">=</span> <span class="n">email</span> 
+
+<div class="viewcode-block" id="Person.introduce"><a class="viewcode-back" href="../oop.html#oop.Person.introduce">[docs]</a>    <span class="k">def</span> <span class="nf">introduce</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Print an introduction message with the person&#39;s name and age.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hello, my name is </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> and I am </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">age</span><span class="si">}</span><span class="s2"> years old.&quot;</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="Person.to_dict"><a class="viewcode-back" href="../oop.html#oop.Person.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert the person object to a dictionary.</span>
+
+<span class="sd">        :return: A dictionary representation of the person.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">age</span><span class="p">,</span>
+            <span class="s1">&#39;email&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_email</span>
+        <span class="p">}</span></div>
+    
+<div class="viewcode-block" id="Person.from_dict"><a class="viewcode-back" href="../oop.html#oop.Person.from_dict">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;Person&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a Person object from a dictionary.</span>
+
+<span class="sd">        :param data: A dictionary containing person data.</span>
+<span class="sd">        :type data: dict</span>
+<span class="sd">        :return: A Person instance created from the dictionary.</span>
+<span class="sd">        :rtype: Person</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Person</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+            <span class="n">age</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">],</span>
+            <span class="n">email</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]</span>
+        <span class="p">)</span></div>
+    
+<div class="viewcode-block" id="Person.save_to_file"><a class="viewcode-back" href="../oop.html#oop.Person.save_to_file">[docs]</a>    <span class="k">def</span> <span class="nf">save_to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save the person object to a file in JSON format.</span>
+
+<span class="sd">        :param filename: The file path where the object will be saved.</span>
+<span class="sd">        :type filename: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(),</span> <span class="n">file</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="Person.load_from_file"><a class="viewcode-back" href="../oop.html#oop.Person.load_from_file">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">load_from_file</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Person&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load a Person object from a file in JSON format.</span>
+
+<span class="sd">        :param filename: The file path to load the person from.</span>
+<span class="sd">        :type filename: str</span>
+<span class="sd">        :return: A Person instance created from the file.</span>
+<span class="sd">        :rtype: Person</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Person</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="Student"><a class="viewcode-back" href="../oop.html#oop.Student">[docs]</a><span class="k">class</span> <span class="nc">Student</span><span class="p">(</span><span class="n">Person</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class representing a student, inheriting from Person.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">age</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">student_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">registered_courses</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;Course&#39;</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize a new instance of the Student class.</span>
+
+<span class="sd">        :param name: The name of the student.</span>
+<span class="sd">        :type name: str</span>
+<span class="sd">        :param age: The age of the student.</span>
+<span class="sd">        :type age: int</span>
+<span class="sd">        :param email: The email of the student.</span>
+<span class="sd">        :type email: str</span>
+<span class="sd">        :param student_id: The ID of the student.</span>
+<span class="sd">        :type student_id: str</span>
+<span class="sd">        :param registered_courses: A list of registered courses for the student.</span>
+<span class="sd">        :type registered_courses: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">email</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_id</span> <span class="o">=</span> <span class="n">student_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registered_courses</span> <span class="o">=</span> <span class="n">registered_courses</span> <span class="k">if</span> <span class="n">registered_courses</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="Student.register_course"><a class="viewcode-back" href="../oop.html#oop.Student.register_course">[docs]</a>    <span class="k">def</span> <span class="nf">register_course</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">course</span><span class="p">:</span> <span class="s1">&#39;Course&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Register the student for a new course.</span>
+
+<span class="sd">        :param course: The course to register the student for.</span>
+<span class="sd">        :type course: Course</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">course</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">registered_courses</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">registered_courses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">course</span><span class="p">)</span>
+            <span class="n">course</span><span class="o">.</span><span class="n">add_student</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Student &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; has been registered for course &#39;</span><span class="si">{</span><span class="n">course</span><span class="o">.</span><span class="n">course_name</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Student </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> is already registered for </span><span class="si">{</span><span class="n">course</span><span class="o">.</span><span class="n">course_name</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="Student.to_dict"><a class="viewcode-back" href="../oop.html#oop.Student.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert the student object to a dictionary.</span>
+
+<span class="sd">        :return: A dictionary representation of the student.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="s1">&#39;student_id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">student_id</span><span class="p">,</span>
+            <span class="s1">&#39;registered_courses&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">course</span><span class="o">.</span><span class="n">course_id</span> <span class="k">for</span> <span class="n">course</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">registered_courses</span><span class="p">]</span>  
+        <span class="p">})</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+    
+<div class="viewcode-block" id="Student.from_dict"><a class="viewcode-back" href="../oop.html#oop.Student.from_dict">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;Student&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a Student object from a dictionary.</span>
+
+<span class="sd">        :param data: A dictionary containing student data.</span>
+<span class="sd">        :type data: dict</span>
+<span class="sd">        :return: A Student instance created from the dictionary.</span>
+<span class="sd">        :rtype: Student</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">registered_courses</span> <span class="o">=</span> <span class="p">[</span><span class="n">Course</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">course</span><span class="p">)</span> <span class="k">for</span> <span class="n">course</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;registered_courses&#39;</span><span class="p">,</span> <span class="p">[])]</span>
+        <span class="k">return</span> <span class="n">Student</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+            <span class="n">age</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">],</span>
+            <span class="n">email</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
+            <span class="n">student_id</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;student_id&#39;</span><span class="p">],</span>
+            <span class="n">registered_courses</span><span class="o">=</span><span class="n">registered_courses</span>
+        <span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="Instructor"><a class="viewcode-back" href="../oop.html#oop.Instructor">[docs]</a><span class="k">class</span> <span class="nc">Instructor</span><span class="p">(</span><span class="n">Person</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class representing an instructor, inheriting from Person.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">age</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">email</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">instructor_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">assigned_courses</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;Course&#39;</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize a new instance of the Instructor class.</span>
+
+<span class="sd">        :param name: The name of the instructor.</span>
+<span class="sd">        :type name: str</span>
+<span class="sd">        :param age: The age of the instructor.</span>
+<span class="sd">        :type age: int</span>
+<span class="sd">        :param email: The email of the instructor.</span>
+<span class="sd">        :type email: str</span>
+<span class="sd">        :param instructor_id: The ID of the instructor.</span>
+<span class="sd">        :type instructor_id: str</span>
+<span class="sd">        :param assigned_courses: A list of assigned courses for the instructor.</span>
+<span class="sd">        :type assigned_courses: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">email</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_id</span> <span class="o">=</span> <span class="n">instructor_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assigned_courses</span> <span class="o">=</span> <span class="n">assigned_courses</span> <span class="k">if</span> <span class="n">assigned_courses</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="Instructor.assign_course"><a class="viewcode-back" href="../oop.html#oop.Instructor.assign_course">[docs]</a>    <span class="k">def</span> <span class="nf">assign_course</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">course</span><span class="p">:</span> <span class="s1">&#39;Course&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Assign the instructor to a new course.</span>
+
+<span class="sd">        :param course: The course to assign the instructor to.</span>
+<span class="sd">        :type course: Course</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">course</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_courses</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assigned_courses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">course</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Instructor &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; has been assigned to course &#39;</span><span class="si">{</span><span class="n">course</span><span class="o">.</span><span class="n">course_name</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Instructor </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> is already assigned to </span><span class="si">{</span><span class="n">course</span><span class="o">.</span><span class="n">course_name</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="Instructor.to_dict"><a class="viewcode-back" href="../oop.html#oop.Instructor.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert the instructor object to a dictionary.</span>
+
+<span class="sd">        :return: A dictionary representation of the instructor.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="s1">&#39;instructor_id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructor_id</span><span class="p">,</span>
+            <span class="s1">&#39;assigned_courses&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">course</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">course</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_courses</span><span class="p">]</span>
+        <span class="p">})</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+
+<div class="viewcode-block" id="Instructor.from_dict"><a class="viewcode-back" href="../oop.html#oop.Instructor.from_dict">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;Instructor&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create an Instructor object from a dictionary.</span>
+
+<span class="sd">        :param data: A dictionary containing instructor data.</span>
+<span class="sd">        :type data: dict</span>
+<span class="sd">        :return: An Instructor instance created from the dictionary.</span>
+<span class="sd">        :rtype: Instructor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">assigned_courses</span> <span class="o">=</span> <span class="p">[</span><span class="n">Course</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">course</span><span class="p">)</span> <span class="k">for</span> <span class="n">course</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;assigned_courses&#39;</span><span class="p">,</span> <span class="p">[])]</span>
+        <span class="k">return</span> <span class="n">Instructor</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+            <span class="n">age</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">],</span>
+            <span class="n">email</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
+            <span class="n">instructor_id</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;instructor_id&#39;</span><span class="p">],</span>
+            <span class="n">assigned_courses</span><span class="o">=</span><span class="n">assigned_courses</span>  
+        <span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="Course"><a class="viewcode-back" href="../oop.html#oop.Course">[docs]</a><span class="k">class</span> <span class="nc">Course</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class representing a course with enrolled students and an assigned instructor.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">course_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">course_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">instructor</span><span class="p">:</span> <span class="n">Instructor</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize a new instance of the Course class.</span>
+
+<span class="sd">        :param course_id: The ID of the course.</span>
+<span class="sd">        :type course_id: str</span>
+<span class="sd">        :param course_name: The name of the course.</span>
+<span class="sd">        :type course_name: str</span>
+<span class="sd">        :param instructor: The instructor assigned to the course.</span>
+<span class="sd">        :type instructor: Instructor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_id</span> <span class="o">=</span> <span class="n">course_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_name</span> <span class="o">=</span> <span class="n">course_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor</span> <span class="o">=</span> <span class="n">instructor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enrolled_students</span> <span class="o">=</span> <span class="p">[]</span>
+    
+<div class="viewcode-block" id="Course.add_student"><a class="viewcode-back" href="../oop.html#oop.Course.add_student">[docs]</a>    <span class="k">def</span> <span class="nf">add_student</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">student</span><span class="p">:</span> <span class="n">Student</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a student to the course.</span>
+
+<span class="sd">        :param student: The student to add to the course.</span>
+<span class="sd">        :type student: Student</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enrolled_students</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">student</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Student &#39;</span><span class="si">{</span><span class="n">student</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; has been added to course &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">course_name</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="Course.to_dict"><a class="viewcode-back" href="../oop.html#oop.Course.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert the course object to a dictionary.</span>
+
+<span class="sd">        :return: A dictionary representation of the course.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;course_id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">course_id</span><span class="p">,</span>
+            <span class="s1">&#39;course_name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">course_name</span><span class="p">,</span>
+            <span class="s1">&#39;instructor&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructor</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructor</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s1">&#39;enrolled_students&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">student</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">student</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">enrolled_students</span><span class="p">]</span>
+        <span class="p">}</span></div>
+    
+<div class="viewcode-block" id="Course.from_dict"><a class="viewcode-back" href="../oop.html#oop.Course.from_dict">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;Course&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a Course object from a dictionary.</span>
+
+<span class="sd">        :param data: A dictionary containing course data.</span>
+<span class="sd">        :type data: dict</span>
+<span class="sd">        :return: A Course instance created from the dictionary.</span>
+<span class="sd">        :rtype: Course</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">course</span> <span class="o">=</span> <span class="n">Course</span><span class="p">(</span>
+            <span class="n">course_id</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;course_id&#39;</span><span class="p">],</span>
+            <span class="n">course_name</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;course_name&#39;</span><span class="p">],</span>
+            <span class="n">instructor</span><span class="o">=</span><span class="n">Instructor</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;instructor&#39;</span><span class="p">])</span> <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;instructor&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="p">)</span>
+        <span class="n">course</span><span class="o">.</span><span class="n">enrolled_students</span> <span class="o">=</span> <span class="p">[</span><span class="n">Student</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">student</span><span class="p">)</span> <span class="k">for</span> <span class="n">student</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;enrolled_students&#39;</span><span class="p">,</span> <span class="p">[])]</span>
+        <span class="k">return</span> <span class="n">course</span></div>
+
+
+
+<div class="viewcode-block" id="Course.save_to_file"><a class="viewcode-back" href="../oop.html#oop.Course.save_to_file">[docs]</a>    <span class="k">def</span> <span class="nf">save_to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(),</span> <span class="n">file</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="Course.load_from_file"><a class="viewcode-back" href="../oop.html#oop.Course.load_from_file">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">load_from_file</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Course&#39;</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Course</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div></div>
+
+<span class="kn">import</span> <span class="nn">tkinter</span> <span class="k">as</span> <span class="nn">tk</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">ttk</span><span class="p">,</span> <span class="n">messagebox</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<div class="viewcode-block" id="SchoolManagementSystemApp"><a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystemApp">[docs]</a><span class="k">class</span> <span class="nc">SchoolManagementSystemApp</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to create a School Management System GUI application.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        root (tk.Tk): The main application window.</span>
+<span class="sd">        students (list): List of students in the system.</span>
+<span class="sd">        instructors (list): List of instructors in the system.</span>
+<span class="sd">        courses (list): List of courses in the system.</span>
+
+<span class="sd">    Methods:</span>
+<span class="sd">        create_gui(): Creates the graphical user interface (GUI) for the application.</span>
+<span class="sd">        load_data_from_db(): Loads data from the database and populates the application.</span>
+<span class="sd">        create_student_form(tab): Creates the form for student input in the GUI.</span>
+<span class="sd">        create_instructor_form(tab): Creates the form for instructor input in the GUI.</span>
+<span class="sd">        create_course_form(tab): Creates the form for course input in the GUI.</span>
+<span class="sd">        create_record_display_area(): Creates the display area for showing records.</span>
+<span class="sd">        create_edit_delete_buttons(): Creates buttons for editing and deleting records.</span>
+<span class="sd">        create_save_load_buttons(): Creates buttons for saving and loading data.</span>
+<span class="sd">        register_student_to_course(): Registers a student to a selected course.</span>
+<span class="sd">        add_student(): Adds a new student to the system.</span>
+<span class="sd">        add_instructor(): Adds a new instructor to the system.</span>
+<span class="sd">        add_course(): Adds a new course to the system.</span>
+<span class="sd">        edit_record(): Placeholder function for editing a record (not implemented).</span>
+<span class="sd">        delete_record(): Deletes a selected record from the display.</span>
+<span class="sd">        save_data(): Saves current data to a JSON file.</span>
+<span class="sd">        load_data(): Loads saved data from a JSON file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the SchoolManagementSystemApp instance.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            root (tk.Tk): The root window where the app will be built.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">root</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;School Management System&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s2">&quot;800x600&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">students</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">courses</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_gui</span><span class="p">()</span>
+        <span class="c1">#self.load_data_from_db()</span>
+
+<div class="viewcode-block" id="SchoolManagementSystemApp.create_gui"><a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystemApp.create_gui">[docs]</a>    <span class="k">def</span> <span class="nf">create_gui</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates the graphical user interface (GUI) components for the application.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_control</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Notebook</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_tab</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab_control</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_tab</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab_control</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_tab</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab_control</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_control</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">student_tab</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Students&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_control</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instructor_tab</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Instructors&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_control</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">course_tab</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Courses&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_control</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">expand</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_student_form</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">student_tab</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_instructor_form</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instructor_tab</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_course_form</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">course_tab</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_record_display_area</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_edit_delete_buttons</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_save_load_buttons</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SchoolManagementSystemApp.load_data_from_db"><a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystemApp.load_data_from_db">[docs]</a>    <span class="k">def</span> <span class="nf">load_data_from_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads data from the database into the system.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">student_records</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_all_students</span><span class="p">()</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">students</span> <span class="o">=</span> <span class="p">[</span><span class="n">Student</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">student</span><span class="p">)</span> <span class="k">for</span> <span class="n">student</span> <span class="ow">in</span> <span class="n">student_records</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">get_children</span><span class="p">())</span>
+            <span class="k">for</span> <span class="n">student</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">students</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Student&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">student</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, ID: </span><span class="si">{</span><span class="n">student</span><span class="o">.</span><span class="n">student_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+
+            <span class="n">instructor_records</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_all_instructors</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span> <span class="o">=</span> <span class="p">[</span><span class="n">Instructor</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">instructor</span><span class="p">)</span> <span class="k">for</span> <span class="n">instructor</span> <span class="ow">in</span> <span class="n">instructor_records</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">course_instructor_combobox</span><span class="p">[</span><span class="s1">&#39;values&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">instructor</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">instructor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">instructor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Instructor&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">instructor</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, ID: </span><span class="si">{</span><span class="n">instructor</span><span class="o">.</span><span class="n">instructor_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+
+            <span class="n">course_records</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_all_courses</span><span class="p">()</span>  
+            <span class="bp">self</span><span class="o">.</span><span class="n">courses</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">course_data</span> <span class="ow">in</span> <span class="n">course_records</span><span class="p">:</span>
+                <span class="n">instructor</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">instructor_id</span> <span class="o">==</span> <span class="n">course_data</span><span class="p">[</span><span class="s2">&quot;instructor&quot;</span><span class="p">][</span><span class="s2">&quot;instructor_id&quot;</span><span class="p">]),</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="n">course</span> <span class="o">=</span> <span class="n">Course</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">course_data</span><span class="p">)</span>
+                <span class="n">course</span><span class="o">.</span><span class="n">instructor</span> <span class="o">=</span> <span class="n">instructor</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">courses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">course</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Course&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">course</span><span class="o">.</span><span class="n">course_name</span><span class="si">}</span><span class="s2">, ID: </span><span class="si">{</span><span class="n">course</span><span class="o">.</span><span class="n">course_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">student</span> <span class="ow">in</span> <span class="n">course</span><span class="o">.</span><span class="n">enrolled_students</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">student</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">students</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">students</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">student</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">course_register_combobox</span><span class="p">[</span><span class="s1">&#39;values&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">course</span><span class="o">.</span><span class="n">course_name</span> <span class="k">for</span> <span class="n">course</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">courses</span><span class="p">]</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SchoolManagementSystemApp.create_student_form"><a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystemApp.create_student_form">[docs]</a>    <span class="k">def</span> <span class="nf">create_student_form</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tab</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates the form for adding student information.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tab (tk.Frame): The tab where the form will be placed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_name_label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">tab</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Name:&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_name_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_name_entry</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_name_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_age_label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">tab</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Age:&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_age_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_age_entry</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_age_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_email_label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">tab</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Email:&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_email_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_email_entry</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_email_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_id_label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">tab</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Student ID:&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_id_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_id_entry</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">student_id_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_register_label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">tab</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Register for Course:&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_register_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_register_combobox</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Combobox</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_register_combobox</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_course_button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">tab</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Register Course&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">register_student_to_course</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_course_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_student_button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">tab</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Add Student&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">add_student</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_student_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SchoolManagementSystemApp.create_instructor_form"><a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystemApp.create_instructor_form">[docs]</a>    <span class="k">def</span> <span class="nf">create_instructor_form</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tab</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates the form for adding instructor information.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tab (tk.Frame): The tab where the form will be placed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_name_label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">tab</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Name:&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_name_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_name_entry</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_name_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_age_label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">tab</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Age:&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_age_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_age_entry</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_age_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_email_label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">tab</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Email:&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_email_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_email_entry</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_email_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_id_label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">tab</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Instructor ID:&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_id_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_id_entry</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructor_id_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_instructor_button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">tab</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Add Instructor&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">add_instructor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_instructor_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SchoolManagementSystemApp.create_course_form"><a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystemApp.create_course_form">[docs]</a>    <span class="k">def</span> <span class="nf">create_course_form</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tab</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates the form for adding course information.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tab (tk.Frame): The tab where the form will be placed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_id_label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">tab</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Course ID:&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_id_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_id_entry</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_id_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_name_label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">tab</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Course Name:&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_name_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_name_entry</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_name_entry</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_instructor_label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">tab</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Instructor:&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_instructor_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_instructor_combobox</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Combobox</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">course_instructor_combobox</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_course_button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">tab</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Add Course&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">add_course</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_course_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SchoolManagementSystemApp.create_record_display_area"><a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystemApp.create_record_display_area">[docs]</a>    <span class="k">def</span> <span class="nf">create_record_display_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates the display area for showing student, instructor, and course records.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Treeview</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Type&quot;</span><span class="p">,</span> <span class="s2">&quot;Details&quot;</span><span class="p">),</span> <span class="n">show</span><span class="o">=</span><span class="s2">&quot;headings&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">heading</span><span class="p">(</span><span class="s2">&quot;Type&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Type&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">heading</span><span class="p">(</span><span class="s2">&quot;Details&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Details&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">tk</span><span class="o">.</span><span class="n">BOTH</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SchoolManagementSystemApp.create_edit_delete_buttons"><a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystemApp.create_edit_delete_buttons">[docs]</a>    <span class="k">def</span> <span class="nf">create_edit_delete_buttons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates buttons for editing and deleting selected records.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">edit_delete_frame</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">edit_delete_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">edit_button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edit_delete_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Edit&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">edit_record</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">edit_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">delete_button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">edit_delete_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Delete&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">delete_record</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delete_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SchoolManagementSystemApp.create_save_load_buttons"><a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystemApp.create_save_load_buttons">[docs]</a>    <span class="k">def</span> <span class="nf">create_save_load_buttons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates buttons for saving and loading data.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_load_frame</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_load_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_load_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Save Data&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">save_data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_load_frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Load Data&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SchoolManagementSystemApp.register_student_to_course"><a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystemApp.register_student_to_course">[docs]</a>    <span class="k">def</span> <span class="nf">register_student_to_course</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Registers a student to a course selected from the dropdown menu.&quot;&quot;&quot;</span>
+        <span class="n">course_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">course_register_combobox</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">student_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">student_name_entry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">register_student_to_course</span><span class="p">(</span><span class="n">student_name</span><span class="p">,</span> <span class="n">course_name</span><span class="p">)</span>  
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Success&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Student &#39;</span><span class="si">{</span><span class="n">student_name</span><span class="si">}</span><span class="s2">&#39; registered for course &#39;</span><span class="si">{</span><span class="n">course_name</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SchoolManagementSystemApp.add_student"><a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystemApp.add_student">[docs]</a>    <span class="k">def</span> <span class="nf">add_student</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds a new student to the system.&quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">student_name_entry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">age</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">student_age_entry</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+        <span class="n">email</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">student_email_entry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">student_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">student_id_entry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">add_student</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">student_id</span><span class="p">)</span>  
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Student&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">, ID: </span><span class="si">{</span><span class="n">student_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Success&quot;</span><span class="p">,</span> <span class="s2">&quot;Student added successfully!&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SchoolManagementSystemApp.add_instructor"><a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystemApp.add_instructor">[docs]</a>    <span class="k">def</span> <span class="nf">add_instructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds a new instructor to the system.&quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructor_name_entry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">age</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instructor_age_entry</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+        <span class="n">email</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructor_email_entry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">instructor_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructor_id_entry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">add_instructor</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">instructor_id</span><span class="p">)</span>  
+            <span class="bp">self</span><span class="o">.</span><span class="n">course_instructor_combobox</span><span class="p">[</span><span class="s1">&#39;values&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_all_instructors</span><span class="p">()</span>  
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Instructor&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">, ID: </span><span class="si">{</span><span class="n">instructor_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Success&quot;</span><span class="p">,</span> <span class="s2">&quot;Instructor added successfully!&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SchoolManagementSystemApp.add_course"><a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystemApp.add_course">[docs]</a>    <span class="k">def</span> <span class="nf">add_course</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds a new course to the system.&quot;&quot;&quot;</span>
+        <span class="n">course_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">course_id_entry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">course_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">course_name_entry</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">instructor_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">course_instructor_combobox</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">add_course</span><span class="p">(</span><span class="n">course_id</span><span class="p">,</span> <span class="n">course_name</span><span class="p">,</span> <span class="n">instructor_name</span><span class="p">)</span>  
+            <span class="bp">self</span><span class="o">.</span><span class="n">course_register_combobox</span><span class="p">[</span><span class="s1">&#39;values&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_all_courses</span><span class="p">()</span>  
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Course&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">course_name</span><span class="si">}</span><span class="s2">, ID: </span><span class="si">{</span><span class="n">course_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Success&quot;</span><span class="p">,</span> <span class="s2">&quot;Course added successfully!&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="SchoolManagementSystemApp.edit_record"><a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystemApp.edit_record">[docs]</a>    <span class="k">def</span> <span class="nf">edit_record</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Placeholder method for editing a selected record.&quot;&quot;&quot;</span>
+        <span class="n">selected_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">selection</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">selected_item</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showwarning</span><span class="p">(</span><span class="s2">&quot;Warning&quot;</span><span class="p">,</span> <span class="s2">&quot;No record selected.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        
+        <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Info&quot;</span><span class="p">,</span> <span class="s2">&quot;Edit feature is not implemented in this example.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SchoolManagementSystemApp.delete_record"><a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystemApp.delete_record">[docs]</a>    <span class="k">def</span> <span class="nf">delete_record</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Deletes the selected record from the system.&quot;&quot;&quot;</span>
+        <span class="n">selected_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">selection</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">selected_item</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showwarning</span><span class="p">(</span><span class="s2">&quot;Warning&quot;</span><span class="p">,</span> <span class="s2">&quot;No record selected.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">selected_item</span><span class="p">)</span>
+        <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Info&quot;</span><span class="p">,</span> <span class="s2">&quot;Record deleted successfully!&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SchoolManagementSystemApp.save_data"><a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystemApp.save_data">[docs]</a>    <span class="k">def</span> <span class="nf">save_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Saves the current data to a JSON file.&quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;students&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">student</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">student</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">students</span><span class="p">],</span>
+            <span class="s2">&quot;instructors&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">instructor</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">instructor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span><span class="p">],</span>
+            <span class="s2">&quot;courses&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">course</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">course</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">courses</span><span class="p">]</span>
+        <span class="p">}</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;school_data.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Success&quot;</span><span class="p">,</span> <span class="s2">&quot;Data saved successfully!&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SchoolManagementSystemApp.load_data"><a class="viewcode-back" href="../oop.html#oop.SchoolManagementSystemApp.load_data">[docs]</a>    <span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads data from a JSON file.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;school_data.json&quot;</span><span class="p">):</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="s2">&quot;No saved data file found.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;school_data.json&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">students</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">courses</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">get_children</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">student_data</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;students&quot;</span><span class="p">,</span> <span class="p">[]):</span>
+            <span class="n">student</span> <span class="o">=</span> <span class="n">Student</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">student_data</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">students</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">student</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Student&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">student</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, ID: </span><span class="si">{</span><span class="n">student</span><span class="o">.</span><span class="n">student_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">instructor_data</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;instructors&quot;</span><span class="p">,</span> <span class="p">[]):</span>
+            <span class="n">instructor</span> <span class="o">=</span> <span class="n">Instructor</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">instructor_data</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">instructor</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">course_instructor_combobox</span><span class="p">[</span><span class="s1">&#39;values&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">instructor</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">instructor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Instructor&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">instructor</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, ID: </span><span class="si">{</span><span class="n">instructor</span><span class="o">.</span><span class="n">instructor_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">course_data</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;courses&quot;</span><span class="p">,</span> <span class="p">[]):</span>
+            <span class="n">instructor</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">instructors</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">course_data</span><span class="p">[</span><span class="s2">&quot;instructor&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]),</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">course</span> <span class="o">=</span> <span class="n">Course</span><span class="p">(</span><span class="n">course_data</span><span class="p">[</span><span class="s2">&quot;course_id&quot;</span><span class="p">],</span> <span class="n">course_data</span><span class="p">[</span><span class="s2">&quot;course_name&quot;</span><span class="p">],</span> <span class="n">instructor</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">student_data</span> <span class="ow">in</span> <span class="n">course_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;enrolled_students&quot;</span><span class="p">,</span> <span class="p">[]):</span>
+                <span class="n">student</span> <span class="o">=</span> <span class="n">Student</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">student_data</span><span class="p">)</span>
+                <span class="n">course</span><span class="o">.</span><span class="n">enrolled_students</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">student</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">courses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">course</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Course&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">course</span><span class="o">.</span><span class="n">course_name</span><span class="si">}</span><span class="s2">, ID: </span><span class="si">{</span><span class="n">course</span><span class="o">.</span><span class="n">course_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+
+        <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Success&quot;</span><span class="p">,</span> <span class="s2">&quot;Data loaded successfully!&quot;</span><span class="p">)</span></div></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">SchoolManagementSystemApp</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+    <span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, mohamadsalam.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
