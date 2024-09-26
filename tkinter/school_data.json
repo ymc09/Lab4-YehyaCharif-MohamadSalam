@@ -1,0 +1,13 @@
+{
+    "students": [],
+    "instructors": [
+        {
+            "name": "dasda",
+            "age": 51,
+            "email": "nabdo@gmail.com",
+            "instructor_id": "2",
+            "assigned_courses": []
+        }
+    ],
+    "courses": []
+}
