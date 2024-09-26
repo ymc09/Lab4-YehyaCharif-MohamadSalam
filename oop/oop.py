@@ -165,40 +165,24 @@ class SchoolDatabase:
 #PART 1 
 
 
-
+def validate_email(email):
+    email_regex = r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'
+    if not re.match(email_regex, email):
+        raise ValueError(f"Please enter a valid email address: {email}")
 
 def validate_non_empty_string(value, field_name):
     if not isinstance(value, str) or not value.strip():
         raise ValueError(f"{field_name} is mandatory.")
 
-def is_valid_email(email: str) -> bool:
-    """
-    Check if the provided email is in a valid format.
-
-    :param email: The email address to validate.
-    :type email: str
-    :return: True if the email is valid, False otherwise.
-    :rtype: bool
-    """
-    pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
-    return re.match(pattern, email) is not None
-
-def is_non_negative_age(age: int) -> bool:
-    """
-    Check if the provided age is non-negative.
-
-    :param age: The age to validate.
-    :type age: int
-    :return: True if the age is non-negative, False otherwise.
-    :rtype: bool
-    """
-    return age >= 0
+def validate_age(age):
+    if not isinstance(age, int) or age < 0:
+        raise ValueError("Age cannot be negative.")
 
 class Person:
     def __init__(self, name: str, age: int, email: str):
         validate_non_empty_string(name, "Name")
-        is_non_negative_age(age)
-        is_valid_email(email)
+        validate_age(age)
+        validate_email(email)
 
         self.name = name
         self.age = age
@@ -419,10 +403,6 @@ class Course:
             return courses_data
         except (FileNotFoundError, json.JSONDecodeError):
             return []
-
-
-
-
 
 # PART 3
 
@@ -962,19 +942,13 @@ class SchoolManagementSystem(QMainWindow):
 
 
 
-# if __name__ == "__main__":
-#     # app = QApplication(sys.argv)
-#     # window = SchoolManagementSystem()
-#     # window.show()
-#     SchoolDatabase.read_records('school.db', 'students')
-#     SchoolDatabase.read_records('school.db', 'instructors')
-#     SchoolDatabase.read_records('school.db', 'courses')
-#     SchoolDatabase.read_records('school.db', 'registrations')
-#     # sys.exit(app.exec_())
-
-
-
-
-
-
-
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = SchoolManagementSystem()
+    window.show()
+    db=SchoolDatabase()
+    # SchoolDatabase.read_records('school.db', 'students')
+    # SchoolDatabase.read_records('school.db', 'instructors')
+    # SchoolDatabase.read_records('school.db', 'courses')
+    # SchoolDatabase.read_records('school.db', 'registrations')
+    sys.exit(app.exec_())
